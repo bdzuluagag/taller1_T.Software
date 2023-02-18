@@ -1,0 +1,20 @@
+<head>
+    <link href= "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    crossorigin="anonymous">
+</head>
+
+<div class = "container">
+    
+<h1>Welcome to SmartCash</h1>
+{% if user.is_authenticated %}
+<li>
+    <a href="{%  url 'logout' %}">cerrar sesión</a>
+</li>
+<li>
+    <a href="#">@{{ user.username }}</a>
+</li>
+{% else %}
+<li>
+    <a href="{%url 'login' %}">iniciar sesión</a>
+</li>
+{% endif %}
