@@ -1,10 +1,28 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-
+from django.shortcuts import render, redirect
+from .forms import UserRegisterForm
+from django.contrib import messages
 
 def home(request):
-    return HttpResponse('<h1>Welcome to Home Page</h1>')
+    return render(request, 'registration/home.html')
+
+def register(request):
+    
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():   
+            form.save() 
+            username = form.cleaned_data['username']
+            #messages.success(request, f"Te has registrado correctamente{username}")        
+            return redirect('home')
+    else: 
+        form = UserRegisterForm()
+        
+    context = { 'form' : form }     
+    return render(request, 'registration/register.html', context)
 
 
-def about(request):
-    return HttpResponse('<h1>Welcome to About Page!!!</h1>')
+def login(request):
+    
+    return render(request,'registration/login.html') #redirigir al login
+       
+        
