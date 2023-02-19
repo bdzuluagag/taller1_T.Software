@@ -19,7 +19,7 @@ from wallet import views as wallet_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', wallet_views.home),
+    path('', wallet_views.home, name = 'home'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('registro/', wallet_views.registro, name = "registro"),
+    path('register/', wallet_views.register, name = "register"),
 ]
