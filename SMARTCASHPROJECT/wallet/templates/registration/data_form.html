@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>SmartCash App</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+
+	<div class="container">
+		
+			<div class = --bs-body-color>
+				<div class="card mb-2" style="width: 18rem;">
+					<div class="card-body">
+					    <h5 class="card-title">BIENVENIDO </h5>
+					    <h6 class="card-subtitle mb-2 text-muted">Llena los siguientes datos para continuar</h6>
+					    <p class="card-text">Tus datos serán utilizados para saber tu estado financiero actual y no serán compartidos con nadie.</p>
+					  </div>
+					</div>
+					<form action = "{% url 'home' %}">
+				<div class="input-group mb-3 my">
+				  <span class="input-group-text" id="basic-addon1">$</span>
+				  <input type="text" class="form-control" placeholder="Ingresa tu promedio de ingresos mensual: " name = "average_income">
+				</div>
+
+				<div class="input-group mb-3">
+				  <input type="text" class="form-control" placeholder="Ingresa el promedio de tu costo de vida: " name = "life_cost_average" >
+				  <span class="input-group-text" id="basic-addon2">$</span>
+
+				</div>
+				<div class="form-text mb-3">Aquí deberás ingresar la suma total de los gastos indispensables para vivir. Ej: Comida, pago de servicios, lugar de vivienda, entre otros.</div>
+
+				<div class="mb-3">
+				  <label for="basic-url" class="form-label">Mes Actual</label>
+				  <div class="input-group">
+					<span class="input-group-text" id="basic-addon3">$</span>
+					<input type="text" class="form-control" id="basic-url" placeholder="Ingresa la cantidad de dinero que recibiste este mes:" name = "month_income">
+				  </div>
+				  
+				</div>
+
+				<div class="input-group mb-3">
+				  <span class="input-group-text">$</span>
+				  <input type="text" class="form-control" placeholder="Ingresa los gastos indispensables que has realizado este mes: " name = "month_life_expenses">
+				</div>
+
+				<div class="form-text">Gastos dispensables: (ej: lujos, compras innecesarias para vivir)</div>
+
+
+				<div class="input-group mb-3">
+				  <input type="text" class="form-control" placeholder="Ingresa los gastos dispensables que has realizado este mes: " aria-label="Username" name = "month_expenses">
+				  <span class="input-group-text">$</span>
+				  <input type="text" class="form-control" placeholder="Ingresa la cantidad que tienes ahorrada en este momento: " aria-label="Server" name = "current_savings">
+				</div>
+				<div class="form-text">Los datos ingresados solo son para conocer brevemente tu actividad financiera, más adelante podrás detallar de mejor manera tus movimientos y transacciones. </div>
+				<br>
+
+				<br>
+				
+					<button type="submit" class="btn btn-primary"> Continuar </button>
+					</form>
+			</div>
+
+		</div>
+
+	
+
+</body>
+</html>	
