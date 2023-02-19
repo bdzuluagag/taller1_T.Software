@@ -1,0 +1,4 @@
+in, casa, 800000, arriendos, 
+in,  apartamento, 700000, arriendos, 
+out, arriendo, 3000000, esenciales, 
+out,  mercado, 500000, esenciales, 

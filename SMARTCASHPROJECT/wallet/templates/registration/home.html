@@ -3,14 +3,94 @@
     crossorigin="anonymous">
 </head>
 
-<div class = "container">
-<br>
-<br> 
 
-<h1>Bienvenido a SmartCash {{user.username}}</h1>
-<br>
+
 {% if user.is_authenticated %}
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<div class="container">
+		
+		  <div class="container-fluid">
+		    <a class="navbar-brand" href="#">SmartCash</a>
+		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+		      <span class="navbar-toggler-icon"></span>
+		    </button>
+		    <div class="collapse navbar-collapse" id="navbarText">
+		      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+		        <li class="nav-item">
+		          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="#">Estadísticas</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="#">Ingresos</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="{% url 'movements' %}">Movimientos</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="#">Ahorros</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="{% url 'categories' %}">Categorías</a>
+		        </li>
+		      </ul>
+		      
+		      <span class="navbar-text">
+		        Bienvenido, {{name}}
+		      </span>
+		    </div>
+		  </div>
+	</div>
+		</nav>
+
+		<div class="container">
+			<div class="row row-cols-1 row-cols-md-2 g-4">
+			  <div class="col">
+			    <div class="card">
+			      <img src="https://wallpaperaccess.com/full/4105987.jpg" class="card-img-top" alt="...">
+			      <div class="card-body">
+			        <h5 class="card-title">Ingresos</h5>
+			        <p class="card-text">Tu promedio de ingresos registrado es: {{average_income}}.</p>
+			      </div>
+			    </div>
+			  </div>
+
+			  <div class="col">
+			    <div class="card">
+			      <img src="https://t4.ftcdn.net/jpg/02/37/89/07/360_F_237890779_gXkLst9nz02DGgl2TIU4UJIOV8dkrnNN.jpg" class="card-img-top" alt="...">
+			      <div class="card-body">
+			        <a href = "{% url 'movements' %}" class ="card-title"><h5 class="card-title">Movimientos</h5></a>
+			        <p class="card-text">Aquí puedes registrar y consultar los movimientos que has registrado.</p>
+			      </div>
+			    </div>
+			  </div>
+
+			  <div class="col">
+			    <div class="card">
+			      <img src="https://images.unsplash.com/photo-1579621970795-87facc2f976d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c2F2aW5nc3xlbnwwfHwwfHw%3D&w=1000&q=80" class="card-img-top" alt="...">
+			      <div class="card-body">
+			        <h5 class="card-title">Ahorros</h5>
+			        <p class="card-text">Tu cantidad ahorrada hasta el momento es de: {{current_savings}}</p>
+			      </div>
+			    </div>
+			  </div>
+
+			  <div class="col">
+			    <div class="card">
+			      <img src="https://familybudgetexpert.com/wp-content/uploads/2020/12/pexels-karolina-grabowska-5902919-scaled.jpg" class="card-img-top" alt="...">
+			      <div class="card-body">
+			        <a href = "{% url 'categories' %}" class ="card-title"><h5 class="card-title">Categorías</h5></a>
+			        <p class="card-text">Aquí puedes consultar las categorías que has creado</p>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</div>
+
+	</div>
+    <br>
     <a href="{% url 'logout' %}" class="btn btn-success">Cerrar Sesión</a>
 
 {% else %}
