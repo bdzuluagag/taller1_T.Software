@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm
-from django.contrib import messages
 from wallet import movements as mov
+from wallet import connection
 
 
 def home(request):
+    connection.current_user = request.user
+    current_user = request.user
+    print('user', current_user.id)
     return render(request, 'registration/home.html')
 
 
@@ -13,8 +16,7 @@ def register(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data['username']
-            # messages.success(request, f"Te has registrado correctamente{username}")
+            connection.create_user(form.cleaned_data)
             return redirect('dataaform')
     else:
         form = UserRegisterForm()
@@ -28,6 +30,7 @@ def login(request):
 
 
 def data_form(request):
+    connection.current_user = request.user
     average_income = request.GET.get('average_income')
     life_cost_average = request.GET.get('life_cost_average')
     month_income = request.GET.get('month_income')
@@ -41,6 +44,7 @@ def data_form(request):
 
 
 def movements(request):
+    connection.current_user = request.user
     average_income = request.GET.get('average_income')
     life_cost_average = request.GET.get('life_cost_average')
     month_income = request.GET.get('month_income')
@@ -52,13 +56,19 @@ def movements(request):
     exits = request.GET.get('exits')
     movements = mov.read_movements(incomes, exits)
 
-    return render(request, 'registration/movements.html', {'average_income': average_income, 'life_cost_average': life_cost_average,
-                                              'month_income': month_income, 'month_life_expenses': month_life_expenses,
-                                              'month_expenses': month_expenses, 'current_savings': current_savings,
-                                              'movements': movements})
+    return render(request, 'registration/movements.html', {'average_income': average_income,
+                                                           'life_cost_average': life_cost_average,
+                                                           'month_income': month_income,
+                                                           'month_life_expenses': month_life_expenses,
+                                                           'month_expenses': month_expenses,
+                                                           'current_savings': current_savings,
+                                                           'movements': movements})
 
 
 def categories(request):
     category = request.GET.get('category')
     matches = mov.consult_category(category)
     return render(request, 'registration/categories.html', {'category': category, 'matches': matches})
+
+
+

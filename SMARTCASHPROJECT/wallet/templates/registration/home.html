@@ -38,7 +38,7 @@
 		      </ul>
 		      
 		      <span class="navbar-text">
-		        Bienvenido, {{name}}
+		        Bienvenido {{name}}
 		      </span>
 		    </div>
 		  </div>
@@ -94,7 +94,7 @@
     <a href="{% url 'logout' %}" class="btn btn-success">Cerrar Sesión</a>
 
 {% else %}
-
+	<h1>Bienvenido a SmartCash</h1>
     <a href="{% url 'login' %}" class="btn btn-success">Iniciar Sesión</a>
     <a href="{% url 'register' %}" class="btn btn-success">Registrarme</a>
 
