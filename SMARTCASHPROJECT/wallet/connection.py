@@ -12,7 +12,7 @@ def search_user_id(username):
     cur.execute(sql)
     id = cur.fetchall()
     cur.close()
-    return id
+    return id[0][0]
 
 
 def create_user(user_info):
@@ -83,7 +83,7 @@ current_user = None
 
 def search_movement_category(category):
     cur = connection.cursor()
-    sql = f"select * from movimiento where categoria = '{category}'"
+    sql = f"select * from movimiento where categoria = '{category}' and id_usuario = {search_user_id(current_user.username)}"
     cur.execute(sql)
     ans = cur.fetchall()
     cur.close()
