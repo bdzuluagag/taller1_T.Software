@@ -78,12 +78,14 @@ def search_user_movements():
     return ans
 
 
+def search_movement_category(category):
+    cur = connection.cursor()
+    sql = f"select * from movimiento where categoria = '{category}'"
+    cur.execute(sql)
+    ans = cur.fetchall()
+    cur.close()
+    return ans
+
+
 current_user = None
 
-
-cur = connection.cursor()
-sql = f"select * from movimiento where id_usuario = 0"
-cur.execute(sql)
-ans = cur.fetchall()
-cur.close()
-print(ans)
