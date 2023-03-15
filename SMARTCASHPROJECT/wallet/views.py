@@ -7,7 +7,7 @@ from wallet import connection
 def home(request):
     connection.current_user = request.user
     current_user = request.user
-    print('user', current_user.id)
+    print('user', current_user.username)
     return render(request, 'registration/home.html')
 
 
