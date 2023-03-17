@@ -17,13 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from wallet import views as wallet_views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', wallet_views.home, name = 'home'),
+    path('', wallet_views.home, name='home'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', wallet_views.register, name="register"),
     path('movements/', wallet_views.movements, name='movements'),
     path('data_form/', wallet_views.data_form, name='dataaform'),
-    path('categories/', wallet_views.categories, name='categories')
-    
+    path('categories/', wallet_views.categories, name='categories'),
+    path('statistics/', wallet_views.statistics, name='statistics'),
+    path('suggestions/', wallet_views.suggestions, name='suggestions'),
 ]

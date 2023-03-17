@@ -1,7 +1,6 @@
 import mysql.connector
 from datetime import date
 
-
 connection = mysql.connector.connect(user='root', password='Dragonball2004*', host='localhost',
                                      database='smartcash', port='3306')
 
@@ -90,4 +89,48 @@ def search_movement_category(category):
     return ans
 
 
+def search_user_movement_direction(direction):
+    cur = connection.cursor()
+    id_user = search_user_id(current_user.username)
+    sql = f"select * from movimiento where id_usuario = {id_user} and direccion = '{direction}'"
+    cur.execute(sql)
+    ans = cur.fetchall()
+    cur.close()
+    return ans
 
+
+def consult_user_balance():
+    cur = connection.cursor()
+    id_user = search_user_id(current_user.username)
+    sql = f"select * from movimiento where id_usuario = {id_user}"
+    balance = 0
+    cur.execute(sql)
+    movements = cur.fetchall()
+    for movement in movements:
+        if movement[3] == 'entrada':
+            balance += movement[4]
+        else:
+            balance -= movement[4]
+    return balance
+
+
+cur = connection.cursor()
+sql = f"select * from movimiento where id_usuario = 0"
+balance = 0
+cur.execute(sql)
+movements = cur.fetchall()
+for movement in movements:
+    print(balance)
+    if movement[3] == 'entrada':
+        balance += movement[4]
+    else:
+        balance -= movement[4]
+
+print(balance)
+# cur = connection.cursor()
+# sql = f"select * from movimiento where id_usuario = 0"
+# cur.execute(sql)
+# ans = cur.fetchall()
+# cur.close()
+
+# print(ans)

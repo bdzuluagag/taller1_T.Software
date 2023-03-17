@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import UserRegisterForm
 from wallet import movements as mov
 from wallet import connection
+from wallet import charts
 
 
 def home(request):
@@ -66,9 +67,24 @@ def movements(request):
 
 
 def categories(request):
+    connection.current_user = request.user
     category = request.GET.get('category')
     matches = mov.consult_category(category)
     return render(request, 'registration/categories.html', {'category': category, 'matches': matches})
 
+
+def statistics(request):
+    connection.current_user = request.user
+    moves = connection.search_user_movements()
+    charts.pie_chart_movements(moves)
+    charts.line_chart_date_direction(connection.search_user_movement_direction('entrada'), 'entrada')
+    charts.line_chart_date_direction(connection.search_user_movement_direction('salida'), 'salida')
+    return render(request, 'registration/statistics.html')
+
+
+def suggestions(request):
+    connection.current_user = request.user
+    balance = connection.consult_user_balance()
+    return render(request, 'registration/suggestions.html', {'balance': balance})
 
 
