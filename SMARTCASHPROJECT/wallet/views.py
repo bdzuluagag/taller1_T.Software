@@ -75,8 +75,8 @@ def categories(request):
 
 def statistics(request):
     connection.current_user = request.user
-    moves = connection.search_user_movements()
-    charts.pie_chart_movements(moves)
+    charts.pie_chart_movements_direction(connection.search_user_movement_direction('entrada'), 'entrada')
+    charts.pie_chart_movements_direction(connection.search_user_movement_direction('salida'), 'salida')
     charts.line_chart_date_direction(connection.search_user_movement_direction('entrada'), 'entrada')
     charts.line_chart_date_direction(connection.search_user_movement_direction('salida'), 'salida')
     return render(request, 'registration/statistics.html')

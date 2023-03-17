@@ -20,6 +20,22 @@ def pie_chart_movements(movements):
     plt.savefig('static/images/pie_chart.png')
 
 
+def pie_chart_movements_direction(movements, direction):
+    categories = {}
+    for movement in movements:
+        if movement[-1] in categories:
+            categories[movement[-1]] += movement[4]
+        else:
+            categories[movement[-1]] = movement[4]
+    values, labels = categories.values(), categories.keys()
+    plt.figure()
+    plt.pie(values, labels=labels, autopct='%1.0f%%')
+    plt.title(f'{direction}s en categorías')
+    plt.savefig(f'static/images/pie_chart_{direction}.png')
+
+
+
+
 def line_chart_date(movements):
     dates = {}
     for movement in movements:
@@ -45,7 +61,7 @@ def line_chart_date_direction(movements, direction):
             dates[movement[5]] = movement[4]
     figure = plt.figure()
     values, labels = dates.values(), [x.strftime("%m/%d/%Y") for x in dates.keys()]
-    plt.plot(labels, values, figure=figure)
+    plt.plot(labels, values, figure=figure, color='blue' if direction == 'entrada' else 'red')
     plt.title(f'{direction}s en el tiempo')
     plt.xlabel('fecha', figure=figure)
     plt.ylabel(f'{direction}', figure=figure)
