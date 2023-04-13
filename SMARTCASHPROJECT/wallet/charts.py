@@ -18,6 +18,7 @@ def pie_chart_movements(movements):
     plt.pie(values, labels=labels)
     plt.title('Gastos en categorías')
     plt.savefig('static/images/pie_chart.png')
+    plt.close()
 
 
 def pie_chart_movements_direction(movements, direction):
@@ -32,8 +33,7 @@ def pie_chart_movements_direction(movements, direction):
     plt.pie(values, labels=labels, autopct='%1.0f%%')
     plt.title(f'{direction}s en categorías')
     plt.savefig(f'static/images/pie_chart_{direction}.png')
-
-
+    plt.close()
 
 
 def line_chart_date(movements):
@@ -50,6 +50,7 @@ def line_chart_date(movements):
     plt.xlabel('fecha', figure=figure)
     plt.ylabel('dinero gastado', figure=figure)
     plt.savefig('static/images/line_chart.png')
+    plt.close()
 
 
 def line_chart_date_direction(movements, direction):
@@ -66,3 +67,4 @@ def line_chart_date_direction(movements, direction):
     plt.xlabel('fecha', figure=figure)
     plt.ylabel(f'{direction}', figure=figure)
     plt.savefig(f'static/images/line_chart_{direction}.png')
+    plt.close()

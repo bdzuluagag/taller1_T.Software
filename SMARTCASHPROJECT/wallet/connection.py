@@ -1,6 +1,8 @@
 import mysql.connector
 from datetime import date
 
+
+
 connection = mysql.connector.connect(user='root', password='Dragonball2004*', host='localhost',
                                      database='smartcash', port='3306')
 
@@ -22,9 +24,7 @@ def create_user(user_info):
     last_name = user_info['last_name']
     email = user_info['email']
     password = user_info['password1']
-    print('id', id_user)
     sql = f'''insert into usuario(id_usuario, username, nombre, apellido, email, pass) values({id_user}, '{username}', '{name}', '{last_name}', '{email}', '{password}')'''
-    print(sql)
     cur.execute(sql)
     connection.commit()
     cur.close()
@@ -50,9 +50,7 @@ def count_movements():
 
 def create_movement(movements, direction):
     for mov in movements:
-        print(mov)
         movement = mov.split(', ')
-        print(movement)
         id_user = search_user_id(current_user.username)
         cur = connection.cursor()
         name = movement[0]
@@ -81,6 +79,7 @@ current_user = None
 
 
 def search_movement_category(category):
+    category = category.lower()
     cur = connection.cursor()
     sql = f"select * from movimiento where categoria = '{category}' and id_usuario = {search_user_id(current_user.username)}"
     cur.execute(sql)
@@ -114,19 +113,47 @@ def consult_user_balance():
     return balance
 
 
-cur = connection.cursor()
-sql = f"select * from movimiento where id_usuario = 0"
-balance = 0
-cur.execute(sql)
-movements = cur.fetchall()
-for movement in movements:
-    print(balance)
-    if movement[3] == 'entrada':
-        balance += movement[4]
-    else:
-        balance -= movement[4]
+def count_categories():
+    cur = connection.cursor()
+    sql = f'select count(1) from categoria'
+    cur.execute(sql)
+    cantidad = cur.fetchall()
+    cur.close()
+    return cantidad[0][0]
 
-print(balance)
+
+def create_category(category):
+    category = category.lower()
+    cur = connection.cursor()
+    id_user = search_user_id(current_user.username)
+    if search_created_category(category):
+        return True
+    sql = f"insert into categoria(id_categoria, nombre, id_usuario) values({count_categories()}, '{category}', {id_user})"
+    cur.execute(sql)
+    connection.commit()
+    cur.close()
+    return False
+
+
+def search_created_category(category):
+    cur = connection.cursor()
+    id_user = search_user_id(current_user.username)
+    sql = f"select count(1) from categoria where id_usuario = {id_user} and nombre = '{category}'"
+    cur.execute(sql)
+    cantidad = cur.fetchall()
+    cur.close()
+    return cantidad[0][0]
+
+
+def search_user_categories():
+    id_user = search_user_id(current_user.username)
+    cur = connection.cursor()
+    sql = f"select * from categoria where id_usuario = {id_user}"
+    cur.execute(sql)
+    categories = cur.fetchall()
+    cur.close()
+    return categories
+
 # cur = connection.cursor()
 # sql = f"select * from movimiento where id_usuario = 0"
 # cur.execute(sql)

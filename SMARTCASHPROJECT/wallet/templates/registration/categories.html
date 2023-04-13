@@ -6,6 +6,15 @@
     <title>Categorías</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
           crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -49,7 +58,45 @@
 <br>
 <form action="">
     <div class="container">
-        <div class="form-text">Consulta de categorías de movimientos: Ingresa la categoría que quieres consultar y verás los movimientos asociados a esa categoría. </div>
+        <div class="form-text">Creación de categorías
+        </div>
+        <br>
+        <form action="">
+            <div class="input-group">
+                <span class="input-group-text mb-3">Categoría</span>
+                <textarea class="form-control mb-3" aria-label="With textarea"
+                          placeholder="Ingrese el nombre de la categoría que quiere crear."
+                          name="category_to_create"></textarea>
+
+
+                <button type="submit" class="btn btn-primary mb-3">Crear categoría</button>
+            </div>
+            <div class="container">
+
+                {% if created is not None %}
+                {% if not created%}
+                <p>La categoría fue creada con éxito</p>
+                {% else %}
+                <p>La categoría a crear ya existe</p>
+                {% endif %}
+                {% endif %}
+                <br>
+                <div class="form-text">Categorías creadas: </div>
+                <br>
+                {% for category in user_categories %}
+                <p>{{ category }}</p>
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+    <br>
+</form>
+
+<form action="">
+    <div class="container">
+        <div class="form-text">Consulta de categorías de movimientos: Ingresa la categoría que quieres consultar y verás
+            los movimientos asociados a esa categoría.
+        </div>
         <br>
         <form action="">
             <div class="input-group">
@@ -59,7 +106,7 @@
                           name="category"></textarea>
 
 
-                <button type="submit" class="btn btn-primary mb-3"> Consultar Categoria </button>
+                <button type="submit" class="btn btn-primary mb-3"> Consultar Categoria</button>
             </div>
         </form>
         <ul>
@@ -70,9 +117,6 @@
     </div>
     <br>
 </form>
-<br>
-<br>
-<br>
 
 </body>
 </html>

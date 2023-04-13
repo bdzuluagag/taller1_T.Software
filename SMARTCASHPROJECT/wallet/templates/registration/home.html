@@ -1,106 +1,114 @@
 {%load static%}
 <head>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-			crossorigin="anonymous">
-
-	</head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+</head>
 
 
 {% if user.is_authenticated %}
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	<div class="container">
+    <div class="container">
 
-		<div class="container-fluid">
-			<a class="navbar-brand" href="#">SmartCash</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-				aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarText">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{% url 'statistics' %}">Estadísticas</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{% url 'suggestions' %}">Sugerencias</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{% url 'movements' %}">Movimientos</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">Ahorros</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{% url 'categories' %}">Categorías</a>
-					</li>
-				</ul>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">SmartCash</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'statistics' %}">Estadísticas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'suggestions' %}">Sugerencias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'movements' %}">Movimientos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Ahorros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'categories' %}">Categorías</a>
+                    </li>
+                </ul>
 
-				<span class="navbar-text">
+                <span class="navbar-text">
 					Bienvenido, {{name}}
 				</span>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </nav>
 
 <div class="container">
-	<div class="row row-cols-1 row-cols-md-2 g-4">
-		<div class="col">
-			<div class="card">
-				<img src="https://wallpaperaccess.com/full/4105987.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-					<a href = "{% url 'statistics' %}" class = "card-title">
-						<h5 class="card-title">Estadísticas</h5>
-					</a>
-					<p class="card-text">Aquí puedes visualizar gráficamente tu comportamiento financiero </p>
-				</div>
-			</div>
-		</div>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col">
+            <div class="card">
+                <img src="https://wallpaperaccess.com/full/4105987.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <a href="{% url 'statistics' %}" class="card-title">
+                        <h5 class="card-title">Estadísticas</h5>
+                    </a>
+                    <p class="card-text">Aquí puedes visualizar gráficamente tu comportamiento financiero </p>
+                </div>
+            </div>
+        </div>
 
-		<div class="col">
-			<div class="card">
-				<img src="https://t4.ftcdn.net/jpg/02/37/89/07/360_F_237890779_gXkLst9nz02DGgl2TIU4UJIOV8dkrnNN.jpg"
-					class="card-img-top" alt="...">
-				<div class="card-body">
-					<a href="{% url 'movements' %}" class="card-title">
-						<h5 class="card-title">Movimientos</h5>
-					</a>
-					<p class="card-text">Aquí puedes registrar y consultar los movimientos que has registrado.</p>
-				</div>
-			</div>
-		</div>
+        <div class="col">
+            <div class="card">
+                <img src="https://t4.ftcdn.net/jpg/02/37/89/07/360_F_237890779_gXkLst9nz02DGgl2TIU4UJIOV8dkrnNN.jpg"
+                     class="card-img-top" alt="...">
+                <div class="card-body">
+                    <a href="{% url 'movements' %}" class="card-title">
+                        <h5 class="card-title">Movimientos</h5>
+                    </a>
+                    <p class="card-text">Aquí puedes registrar y consultar los movimientos que has registrado.</p>
+                </div>
+            </div>
+        </div>
 
-		<div class="col">
-			<div class="card">
-				<img src="https://images.unsplash.com/photo-1579621970795-87facc2f976d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c2F2aW5nc3xlbnwwfHwwfHw%3D&w=1000&q=80"
-					class="card-img-top" alt="...">
-					<div class="card-body">
-						<a href="{% url 'suggestions' %}" class = "card-title">
-							<h5 class="card-title">Sugerencias</h5>
-							</a>
-						<p class="card-text">Aquí podrás consultar sugerencias para mejorar tu manejo del dinero.</p>
-					</div>
-			</div>
-		</div>
+        <div class="col">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1579621970795-87facc2f976d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c2F2aW5nc3xlbnwwfHwwfHw%3D&w=1000&q=80"
+                     class="card-img-top" alt="...">
+                <div class="card-body">
+                    <a href="{% url 'suggestions' %}" class="card-title">
+                        <h5 class="card-title">Sugerencias</h5>
+                    </a>
+                    <p class="card-text">Aquí podrás consultar sugerencias para mejorar tu manejo del dinero.</p>
+                </div>
+            </div>
+        </div>
 
-		<div class="col">
-			<div class="card">
-				<img src="https://familybudgetexpert.com/wp-content/uploads/2020/12/pexels-karolina-grabowska-5902919-scaled.jpg"
-					class="card-img-top" alt="...">
-				<div class="card-body">
-					<a href="{% url 'categories' %}" class="card-title">
-						<h5 class="card-title">Categorías</h5>
-					</a>
-					<p class="card-text">Aquí puedes consultar las categorías que has creado</p>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="col">
+            <div class="card">
+                <img src="https://familybudgetexpert.com/wp-content/uploads/2020/12/pexels-karolina-grabowska-5902919-scaled.jpg"
+                     class="card-img-top" alt="...">
+                <div class="card-body">
+                    <a href="{% url 'categories' %}" class="card-title">
+                        <h5 class="card-title">Categorías</h5>
+                    </a>
+                    <p class="card-text">Aquí puedes consultar las categorías que has creado</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </div>
@@ -112,286 +120,295 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title></title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-		crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 </head>
 
 <body>
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-		<div class="container">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
 
-			<a href="#" class="navbar-brand"> <span class="text-info">Smart</span>Cash</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarS"
-				aria-controls="navbarS" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarS">
-				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-					<li class="nav-item">
-						<a href="{% url 'login' %}" class="nav-link">Iniciar Sesión</a>
-					</li>
-					<li class="nav-item">
-						<a href="{% url 'register' %}" class="nav-link">Registrarme</a>
-					</li>
+        <a href="#" class="navbar-brand"> <span class="text-info">Smart</span>Cash</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarS"
+                aria-controls="navbarS" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarS">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a href="{% url 'login' %}" class="nav-link">Iniciar Sesión</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'register' %}" class="nav-link">Registrarme</a>
+                </li>
 
-				</ul>
-			</div>
-		</div>
+            </ul>
+        </div>
+    </div>
 
-	</nav>
+</nav>
 
 
-	<div id="carouselE" class="carousel slide" data-bs-ride="carousel">
-		<div class="carousel-indicators">
-			<button type="button" data-bs-target="#carouselE" data-bs-slide-to="0" class="active" aria-current="true"
-				aria-label="Slide 1"></button>
-			<button type="button" data-bs-target="#carouselE" data-bs-slide-to="1" aria-current="true"
-				aria-label="Slide 2"></button>
-			<button type="button" data-bs-target="#carouselE" data-bs-slide-to="2" aria-current="true"
-				aria-label="Slide 3"></button>
+<div id="carouselE" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselE" data-bs-slide-to="0" class="active" aria-current="true"
+                aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselE" data-bs-slide-to="1" aria-current="true"
+                aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselE" data-bs-slide-to="2" aria-current="true"
+                aria-label="Slide 3"></button>
 
-		</div>
-		<div class="carousel-inner">
+    </div>
+    <div class="carousel-inner">
 
-			<div class="carousel-item active">
-				<div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
+        <div class="carousel-item active">
+            <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
  padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
  border-radius: 8px; will-change: transform;">
-  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFdVxg-Noo&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-  </iframe>
-</div>
-<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFdVxg-Noo&#x2F;view?utm_content=DAFdVxg-Noo&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Diseño</a> de SOFIA MENDIETA MARIN
-				<div class="carousel-caption">
-					<h5> Bienvenido </h5>
-					<p>
-						Toma el control de tus finanzas personales, establece metas financieras realistas y
-						mejora tu calidad de vida </p>
-					<a href="#" class="btn btn-primary mt-3">Más información</a>
-				</div>
-			</div>
+                <iframe loading="lazy"
+                        style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                        src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFdVxg-Noo&#x2F;view?embed"
+                        allowfullscreen="allowfullscreen" allow="fullscreen">
+                </iframe>
+            </div>
+            <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFdVxg-Noo&#x2F;view?utm_content=DAFdVxg-Noo&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link"
+               target="_blank" rel="noopener">Diseño</a> de SOFIA MENDIETA MARIN
+            <div class="carousel-caption">
+                <h5> Bienvenido </h5>
+                <p>
+                    Toma el control de tus finanzas personales, establece metas financieras realistas y
+                    mejora tu calidad de vida </p>
+                <a href="#" class="btn btn-primary mt-3">Más información</a>
+            </div>
+        </div>
 
-			<div class="carousel-item">
-				<div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
+        <div class="carousel-item">
+            <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
  padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
  border-radius: 8px; will-change: transform;">
-  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFdV8DS220&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-  </iframe>
-</div>
-<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFdV8DS220&#x2F;view?utm_content=DAFdV8DS220&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Diseño</a> de SOFIA MENDIETA MARIN
-					class="d-block w-100" alt="">
-				<div class="carousel-caption">
-					<h5> Bienvenido </h5>
-					<p>
-						Recibe consejos personalizados sobre cómo ahorrar e invertir tu dinero,
-						construye una base financiera sólida
-					</p>
-					<a href="#" class="btn btn-primary mt-3">Más información</a>
-				</div>
-			</div>
+                <iframe loading="lazy"
+                        style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                        src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFdV8DS220&#x2F;view?embed"
+                        allowfullscreen="allowfullscreen" allow="fullscreen">
+                </iframe>
+            </div>
+            <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFdV8DS220&#x2F;view?utm_content=DAFdV8DS220&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link"
+               target="_blank" rel="noopener">Diseño</a> de SOFIA MENDIETA MARIN
+            class="d-block w-100" alt="">
+            <div class="carousel-caption">
+                <h5> Bienvenido </h5>
+                <p>
+                    Recibe consejos personalizados sobre cómo ahorrar e invertir tu dinero,
+                    construye una base financiera sólida
+                </p>
+                <a href="#" class="btn btn-primary mt-3">Más información</a>
+            </div>
+        </div>
 
-			<div class="carousel-item">
-				<div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
+        <div class="carousel-item">
+            <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
 				padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
 				border-radius: 8px; will-change: transform;">
-				 <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-				   src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFdV-ZKWBs&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-				 </iframe>
-			   </div>
-			   <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFdV-ZKWBs&#x2F;view?utm_content=DAFdV-ZKWBs&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Diseño</a> de SOFIA MENDIETA MARIN
-					class="d-block w-100" alt="">
-				<div class="carousel-caption">
-					<h5> Bienvenido </h5>
-					<p>
-						Reduce tus preocupaciones económicas
-						y siéntete más seguro acerca de tu futuro financiero
-					</p>
-					<a href="#" class="btn btn-primary mt-3">Más información</a>
-				</div>
-			</div>
+                <iframe loading="lazy"
+                        style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                        src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFdV-ZKWBs&#x2F;view?embed"
+                        allowfullscreen="allowfullscreen" allow="fullscreen">
+                </iframe>
+            </div>
+            <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFdV-ZKWBs&#x2F;view?utm_content=DAFdV-ZKWBs&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link"
+               target="_blank" rel="noopener">Diseño</a> de SOFIA MENDIETA MARIN
+            class="d-block w-100" alt="">
+            <div class="carousel-caption">
+                <h5> Bienvenido </h5>
+                <p>
+                    Reduce tus preocupaciones económicas
+                    y siéntete más seguro acerca de tu futuro financiero
+                </p>
+                <a href="#" class="btn btn-primary mt-3">Más información</a>
+            </div>
+        </div>
 
-		</div>
-		<button class="carousel-control-prev" type="button" data-bs-target="#carouselE" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Previous</span>
-		</button>
-		<button class="carousel-control-next" type="button" data-bs-target="#carouselE" data-bs-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Previous</span>
-		</button>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselE" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselE" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
 
-	</div>
+</div>
 
-	<section class="about section-padding">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-4 col-md-12 col-12">
-					<div class="about-img">
-						<img src="https://soyemprendedor.co/wp-content/uploads/2016/12/dinero-ahorro-dolares-marrano.jpg"
-							class="img-fluid" alt="">
-					</div>
-				</div>
-				<div class="col-lg-8 col-md-12 col-12 ps-lg-5 ">
-					<div class="about-text text-white">
-						<h2>¿Qué es SmartCash? </h2>
-						<p> SmartCash es una herramienta para ayudarte a tomar el control de
-							tus finanzas personales. <br> Te permitirá rastrear tus gastos, ingresos y costos de vida de
-							manera fácil y efectiva, además podrás recibir consejos de ahorro en inversión
-							personalizados,
-							visualizar tus patrones de gasto para poder tomar decisiones
-							informadas sobre tus finanzas y otras funcionalidades. <br> <br>
-							¡Con SmartCash podrás mejorar tus hábitos financieros y alcanzar tus objetivos a largo plazo!
-						</p>
-						<a href="#" class="btn btn-primary">Más información</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+<section class="about section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-12">
+                <div class="about-img">
+                    <img src="https://soyemprendedor.co/wp-content/uploads/2016/12/dinero-ahorro-dolares-marrano.jpg"
+                         class="img-fluid" alt="">
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12 col-12 ps-lg-5 ">
+                <div class="about-text text-white">
+                    <h2>¿Qué es SmartCash? </h2>
+                    <p> SmartCash es una herramienta para ayudarte a tomar el control de
+                        tus finanzas personales. <br> Te permitirá rastrear tus gastos, ingresos y costos de vida de
+                        manera fácil y efectiva, además podrás recibir consejos de ahorro en inversión
+                        personalizados,
+                        visualizar tus patrones de gasto para poder tomar decisiones
+                        informadas sobre tus finanzas y otras funcionalidades. <br> <br>
+                        ¡Con SmartCash podrás mejorar tus hábitos financieros y alcanzar tus objetivos a largo plazo!
+                    </p>
+                    <a href="#" class="btn btn-primary">Más información</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-	<section class="services section-padding">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="seccion-header text-center text-white pb-5">
-						<h2>Nuestros servicios</h2>
-						<p> SmartCash ofrece servicios para ayudar a los usuarios a tomar el control de sus finanzas
-							personales
-						</p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12 col-md-12 col-lg-4">
-						<div class="card text-white text-center bg-dark pb-2">
-							<div class="card-body">
-								<i class="bi bi-card-checklist"></i>
-								<br> <br>
-								<h3 class="card-title">Seguimiento</h3>
-								<p class="lead">
-									Podrás registrar tus gastos e ingresos en tiempo real para tener una
-									visión clara de tus finanzas. También podrás categorizar tus transacciones y
-									tener una idea clara de cómo estás gastando tu dinero
-								</p>
-								<button class="btn bg-primary text-white">Más información</button>
-							</div>
+<section class="services section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="seccion-header text-center text-white pb-5">
+                    <h2>Nuestros servicios</h2>
+                    <p> SmartCash ofrece servicios para ayudar a los usuarios a tomar el control de sus finanzas
+                        personales
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-4">
+                    <div class="card text-white text-center bg-dark pb-2">
+                        <div class="card-body">
+                            <i class="bi bi-card-checklist"></i>
+                            <br> <br>
+                            <h3 class="card-title">Seguimiento</h3>
+                            <p class="lead">
+                                Podrás registrar tus gastos e ingresos en tiempo real para tener una
+                                visión clara de tus finanzas. También podrás categorizar tus transacciones y
+                                tener una idea clara de cómo estás gastando tu dinero
+                            </p>
+                            <button class="btn bg-primary text-white">Más información</button>
+                        </div>
 
-						</div>
+                    </div>
 
-					</div>
+                </div>
 
-					<div class="col-12 col-md-12 col-lg-4">
-						<div class="card text-white text-center bg-dark pb-2">
-							<div class="card-body">
-								<i class="bi bi-app-indicator"></i>
-								<br> <br>
-								<h3 class="card-title">Consejos</h3>
-								<p class="lead">
-									Podrás recibir consejos personalizados para ahorrar dinero e
-									invertir de manera efectiva. SmartCash analiza los patrones de tus gastos
-									y te brinda recomendaciones para ayudarte a alcanzar
-									tus objetivos financieros
-								</p>
-								<button class="btn bg-primary text-white">Más información</button>
-							</div>
+                <div class="col-12 col-md-12 col-lg-4">
+                    <div class="card text-white text-center bg-dark pb-2">
+                        <div class="card-body">
+                            <i class="bi bi-app-indicator"></i>
+                            <br> <br>
+                            <h3 class="card-title">Consejos</h3>
+                            <p class="lead">
+                                Podrás recibir consejos personalizados para ahorrar dinero e
+                                invertir de manera efectiva. SmartCash analiza los patrones de tus gastos
+                                y te brinda recomendaciones para ayudarte a alcanzar
+                                tus objetivos financieros
+                            </p>
+                            <button class="btn bg-primary text-white">Más información</button>
+                        </div>
 
-						</div>
+                    </div>
 
-					</div>
+                </div>
 
-					<div class="col-12 col-md-12 col-lg-4">
-						<div class="card text-white text-center bg-dark pb-2">
-							<div class="card-body">
-								<i class="bi bi-brush"></i>
-								<br> <br>
-								<h3 class="card-title">Gráficos</h3>
-								<p class="lead">
-									Podrás ver tus patrones de ingresos y gastos a través de
-									gráficos y tablas interactivas. Esto te permitirá identificar áreas en las que puedes
-									reducir tus gastos y establecer metas de ahorro realistas
-								</p>
-								<button class="btn bg-primary text-white">Más información</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+                <div class="col-12 col-md-12 col-lg-4">
+                    <div class="card text-white text-center bg-dark pb-2">
+                        <div class="card-body">
+                            <i class="bi bi-brush"></i>
+                            <br> <br>
+                            <h3 class="card-title">Gráficos</h3>
+                            <p class="lead">
+                                Podrás ver tus patrones de ingresos y gastos a través de
+                                gráficos y tablas interactivas. Esto te permitirá identificar áreas en las que puedes
+                                reducir tus gastos y establecer metas de ahorro realistas
+                            </p>
+                            <button class="btn bg-primary text-white">Más información</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		</div>
+    </div>
 
-	</section>
+</section>
 
-	<section class="team section.padding">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="section-header text-center text-white pb-5">
-						<h2>Asesores</h2>
-						<p>
-							El equipo SmartCash siempre estará disponible para conocer tus dudas, quejas o sugerencias. <br>
-							¡Conoce el equipo SmartCash!
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="row justify-content-center">
-				<div class="col-12 col-md-6 col-lg-3">
-					<div class="card text-white text-center bg-dark pb-2">
-						<div class="card-body">
-							<img src="https://form-physic.com/wp-content/uploads/2019/03/avatar-1.jpg"
-								class="img-fluid rounded-circle" alt="">
-							<h3 class="card-title py-2">Samuel</h3>
+<section class="team section.padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-header text-center text-white pb-5">
+                    <h2>Asesores</h2>
+                    <p>
+                        El equipo SmartCash siempre estará disponible para conocer tus dudas, quejas o sugerencias. <br>
+                        ¡Conoce el equipo SmartCash!
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card text-white text-center bg-dark pb-2">
+                    <div class="card-body">
+                        <img src="https://form-physic.com/wp-content/uploads/2019/03/avatar-1.jpg"
+                             class="img-fluid rounded-circle" alt="">
+                        <h3 class="card-title py-2">Samuel</h3>
 
-							<p class="socials">
-								<i class="bi bi-twitter text-white mx-1"></i>
-								<i class="bi bi-facebook text-white mx-1"></i>
-								<i class="bi bi-linkedin text-white mx-1"></i>
-								<i class="bi bi-instagram text-white mx-1"></i>
+                        <p class="socials">
+                            <i class="bi bi-twitter text-white mx-1"></i>
+                            <i class="bi bi-facebook text-white mx-1"></i>
+                            <i class="bi bi-linkedin text-white mx-1"></i>
+                            <i class="bi bi-instagram text-white mx-1"></i>
 
-							</p>
-						</div>
-					</div>
-				</div>
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-				<div class="col-12 col-md-6 col-lg-3">
-					<div class="card text-white text-center bg-dark pb-2">
-						<div class="card-body">
-							<img src="https://tse4.mm.bing.net/th?id=OIP.enhGe0XCg7S59e8myRS23AHaHa&pid=Api"
-								class="img-fluid rounded-circle" alt="">
-							<h3 class="card-title py-2">Sofía</h3>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card text-white text-center bg-dark pb-2">
+                    <div class="card-body">
+                        <img src="https://tse4.mm.bing.net/th?id=OIP.enhGe0XCg7S59e8myRS23AHaHa&pid=Api"
+                             class="img-fluid rounded-circle" alt="">
+                        <h3 class="card-title py-2">Sofía</h3>
 
-							<p class="socials">
-								<i class="bi bi-twitter text-white mx-1"></i>
-								<i class="bi bi-facebook text-white mx-1"></i>
-								<i class="bi bi-linkedin text-white mx-1"></i>
-								<i class="bi bi-instagram text-white mx-1"></i>
+                        <p class="socials">
+                            <i class="bi bi-twitter text-white mx-1"></i>
+                            <i class="bi bi-facebook text-white mx-1"></i>
+                            <i class="bi bi-linkedin text-white mx-1"></i>
+                            <i class="bi bi-instagram text-white mx-1"></i>
 
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-		crossorigin="anonymous"></script>
-	<br>
-	<footer class="bg-dark p-2 text-center">
-		<div class="container">
-			<p class="text-white">SmartCash</p>
-		</div>
-	</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+<br>
+<footer class="bg-dark p-2 text-center">
+    <div class="container">
+        <p class="text-white">SmartCash</p>
+    </div>
+</footer>
 </body>
 
 </html>
