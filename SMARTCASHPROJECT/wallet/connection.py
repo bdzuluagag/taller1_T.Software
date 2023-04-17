@@ -1,8 +1,6 @@
 import mysql.connector
 from datetime import date
 
-
-
 connection = mysql.connector.connect(user='root', password='Dragonball2004*', host='localhost',
                                      database='smartcash', port='3306')
 
@@ -152,7 +150,21 @@ def search_user_categories():
     cur.execute(sql)
     categories = cur.fetchall()
     cur.close()
-    return categories
+    print('categories', categories)
+    return categories + [(-1, 'esenciales', id_user), (-1, 'lujos', id_user), (-1, 'fijos', id_user),
+                         (-1, 'deudas', id_user)]
+
+
+def create_user_details(average_income, average_life_cost, month_income, month_life_cost, month_expenses,
+                        current_savings):
+    id_user = search_user_id(current_user.username)
+    cur = connection.cursor()
+    sql = f"insert into detalle(id_usuario, promedio_ingreso, promedio_costo_vida, ingreso_mes, costo_vida_mes, " \
+          f"gastos_mes, ahorro_actual) values({id_user}, {average_income}, {average_life_cost}, {month_income}, " \
+          f"{month_life_cost}, {month_expenses}, {current_savings}) "
+    cur.execute(sql)
+    connection.commit()
+    cur.close()
 
 # cur = connection.cursor()
 # sql = f"select * from movimiento where id_usuario = 0"

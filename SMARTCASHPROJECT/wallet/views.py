@@ -18,7 +18,7 @@ def register(request):
         if form.is_valid():
             form.save()
             connection.create_user(form.cleaned_data)
-            return redirect('dataaform')
+            return redirect('home')
     else:
         form = UserRegisterForm()
 
@@ -38,6 +38,7 @@ def data_form(request):
     month_life_expenses = request.GET.get('month_life_expenses')
     month_expenses = request.GET.get('month_expenses')
     current_savings = request.GET.get('current_savings')
+    print(average_income, life_cost_average, month_income, month_life_expenses, month_expenses, current_savings)
     return render(request, 'registration/data_form.html',
                   {'average_income': average_income, 'life_cost_average': life_cost_average,
                    'month_income': month_income, 'month_life_expenses': month_life_expenses,
