@@ -1,3 +1,6 @@
+
+import datetime
+
 import mysql.connector
 from datetime import date
 
@@ -55,6 +58,13 @@ def create_movement(movements, direction):
         id_movement = count_movements()
         value = movement[1]
         category = movement[2]
+        user_goals = search_user_goals()
+        for goal in user_goals:
+            if goal[2].lower() == category.lower():
+                print('update')
+                sql = f"update meta set cantidadActual = cantidadActual + {value} where id_usuario = {id_user} and nombre = '{category}'"
+                cur.execute(sql)
+                connection.commit()
         sql = f'''insert into movimiento(nombre_movimiento, id_movimiento, id_usuario, direccion, valor, fecha, 
         categoria) values('{name}', {id_movement}, {id_user}, '{direction}', '{value}', '
 {date.today().strftime('%Y-%m-%d')}', '{category}') '''
@@ -155,21 +165,35 @@ def search_user_categories():
                          (-1, 'deudas', id_user)]
 
 
-def create_user_details(average_income, average_life_cost, month_income, month_life_cost, month_expenses,
-                        current_savings):
+def count_goals():
+    cur = connection.cursor()
+    sql = f'select count(1) from meta'
+    cur.execute(sql)
+    cantidad = cur.fetchall()
+    cur.close()
+    return cantidad[0][0]
+
+
+def create_goal(name, value, goal_date):
     id_user = search_user_id(current_user.username)
     cur = connection.cursor()
-    sql = f"insert into detalle(id_usuario, promedio_ingreso, promedio_costo_vida, ingreso_mes, costo_vida_mes, " \
-          f"gastos_mes, ahorro_actual) values({id_user}, {average_income}, {average_life_cost}, {month_income}, " \
-          f"{month_life_cost}, {month_expenses}, {current_savings}) "
+    id_goal = count_goals()
+    goal_date = list(map(int, goal_date.split('/')))
+    goal_date = datetime.date(goal_date[0], goal_date[1], goal_date[2])
+    sql = f"insert into meta(id_meta, id_usuario, nombre, fecha, cantidadMeta, cantidadActual) values ({id_goal}, " \
+          f"{id_user}, '{name}', '{goal_date.strftime('%Y-%m-%d')}', {value}, {0})"
     cur.execute(sql)
     connection.commit()
     cur.close()
 
-# cur = connection.cursor()
-# sql = f"select * from movimiento where id_usuario = 0"
-# cur.execute(sql)
-# ans = cur.fetchall()
-# cur.close()
 
-# print(ans)
+def search_user_goals():
+    id_user = search_user_id(current_user.username)
+    cur = connection.cursor()
+    sql = f"select * from meta where id_usuario = {id_user}"
+    cur.execute(sql)
+    goals = cur.fetchall()
+    cur.close()
+    return goals
+
+

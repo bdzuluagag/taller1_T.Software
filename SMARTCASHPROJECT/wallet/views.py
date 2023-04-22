@@ -38,7 +38,6 @@ def data_form(request):
     month_life_expenses = request.GET.get('month_life_expenses')
     month_expenses = request.GET.get('month_expenses')
     current_savings = request.GET.get('current_savings')
-    print(average_income, life_cost_average, month_income, month_life_expenses, month_expenses, current_savings)
     return render(request, 'registration/data_form.html',
                   {'average_income': average_income, 'life_cost_average': life_cost_average,
                    'month_income': month_income, 'month_life_expenses': month_life_expenses,
@@ -108,3 +107,19 @@ def suggestions(request):
     connection.current_user = request.user
     balance = connection.consult_user_balance()
     return render(request, 'registration/suggestions.html', {'balance': balance})
+
+
+def goals(request):
+    connection.current_user = request.user
+    goal_name = request.GET.get('goal_name')
+    goal_value = request.GET.get('goal_value')
+    goal_date = request.GET.get('goal_date')
+    if goal_date and goal_name and goal_value:
+        connection.create_goal(goal_name, goal_value, goal_date)
+        connection.create_category(goal_name)
+    user_goals = connection.search_user_goals()
+    print(user_goals)
+    return render(request, 'registration/goals.html',
+                  {'goal_name': goal_name, 'goal_value': goal_value, 'goal_date': goal_date, 'user_goals': user_goals})
+
+

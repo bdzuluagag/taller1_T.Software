@@ -28,4 +28,5 @@ urlpatterns = [
     path('categories/', wallet_views.categories, name='categories'),
     path('statistics/', wallet_views.statistics, name='statistics'),
     path('suggestions/', wallet_views.suggestions, name='suggestions'),
+    path('goals/', wallet_views.goals, name='goals'),
 ]
