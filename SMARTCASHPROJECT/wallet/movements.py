@@ -19,10 +19,7 @@ def read_movements(incomes, exits):
     readExits(exits)
     readIncomes(incomes)
     movements = connection.search_user_movements()
-    ans = []
-    for movement in movements:
-        ans.append(f'nombre: {movement[0]}, {movement[3]}, valor: {movement[4]}, fecha: {movement[5].strftime("%m/%d/%Y")}, categoría: {movement[6]}')
-    return ans
+    return movements
 
 
 def consult_category(category):

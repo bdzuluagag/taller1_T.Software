@@ -1,4 +1,3 @@
-
 import datetime
 
 import mysql.connector
@@ -196,4 +195,68 @@ def search_user_goals():
     cur.close()
     return goals
 
+
+def count_event(event_type):
+    cur = connection.cursor()
+    if event_type == 1:
+        sql = f'select count(1) from evento_periodico'
+    else:
+        sql = f'select count(1) from evento_fijo'
+    cur.execute(sql)
+    cantidad = cur.fetchall()
+    cur.close()
+    return cantidad[0][0]
+
+
+def create_event(event_type, name, value, day_date):
+    cur = connection.cursor()
+    id_user = search_user_id(current_user.username)
+    event_id = count_event(event_type)
+    if event_type == 1:
+        sql = f"insert into evento_periodico(id_evento, id_usuario, nombre, dia, cantidad) values ({event_id}, " \
+              f"{id_user}, '{name}', '{day_date}', {value})"
+    else:
+        day_date = list(map(int, day_date.split('/')))
+        day_date = datetime.date(day_date[0], day_date[1], day_date[2])
+        sql = f"insert into evento_fijo(id_evento, id_usuario, nombre, fecha, cantidad) values ({event_id}, " \
+              f"{id_user}, '{name}', '{day_date.strftime('%Y-%m-%d')}', {value})"
+    cur.execute(sql)
+    connection.commit()
+    cur.close()
+
+
+def search_periodic_events():
+    cur = connection.cursor()
+    id_user = search_user_id(current_user.username)
+    sql = f"select * from evento_periodico where id_usuario = {id_user}"
+    cur.execute(sql)
+    ans = cur.fetchall()
+    cur.close()
+    ans = sorted(ans, key=lambda s: s[3])
+    return ans
+
+
+def search_events():
+    cur = connection.cursor()
+    id_user = search_user_id(current_user.username)
+    sql = f"select * from evento_fijo where id_usuario = {id_user}"
+    cur.execute(sql)
+    ans = cur.fetchall()
+    cur.close()
+    ans = sorted(ans, key=lambda s: s[3])
+    return ans
+
+
+def search_day_events(periodic, events):
+    current_date = date.today()
+    ans = []
+    if periodic:
+        for event in periodic:
+            if event[3] == current_date.day:
+                ans.append(event)
+    if events:
+        for event in events:
+            if event[3] == current_date:
+                ans.append(event)
+    return ans
 

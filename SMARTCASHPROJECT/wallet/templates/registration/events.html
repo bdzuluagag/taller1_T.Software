@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Movimientos</title>
+    <meta charset="UTF-8">
+    <title>Eventos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
           crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -46,7 +45,7 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'movements' %}">Movimientos</a>
+                        <a class="nav-link active" aria-current="page" href="{% url 'events' %}">Eventos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'statistics' %}">Estadísticas</a>
@@ -58,13 +57,13 @@
                         <a class="nav-link" href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'goals' %}">Metas</a>
+                        <a class="nav-link" href="{% url 'movements' %}">Movimientos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'categories' %}">Categorías</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'events' %}">Eventos</a>
+                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'goals' %}">Metas</a>
                     </li>
                 </ul>
 
@@ -75,92 +74,139 @@
         </div>
     </div>
 </nav>
-
 <!-- TERMINA BARRA DE NAVEGACIÓN -->
-
 <br>
+<div class="container">
+    <h3>Crear eventos</h3>
+</div>
+
+
 <form action="">
     <div class="container">
-        <div class="form-text">Registro de ingresos de dinero.</div>
+        <div class="form-text">Crear evento periódico</div>
         <br>
         <div class="input-group mb-3">
-            <span class="input-group-text mb-3">Movimiento</span>
+            <span class="input-group-text mb-3">Evento</span>
             <textarea class="form-control mb-3" aria-label="With textarea" placeholder="nombre"
-                      name="income_name"></textarea>
+                      name="periodic_event_name"></textarea>
 
             <span class="input-group-text mb-3">Valor</span>
             <textarea class="form-control mb-3" aria-label="With textarea"
-                      placeholder="Valor" name="income_value"></textarea>
+                      placeholder="Valor asociado al evento" name="periodic_event_value"></textarea>
 
-            <label class="input-group-text mb-3" for="inputGroupSelect01">Categoría</label>
+            <label class="input-group-text mb-3" for="inputGroupSelect01">Día</label>
 
-            <select class="custom-select mb-3" id="inputGroupSelect01" name="income_category">
-                <option selected>Categoría</option>
-                {% for category in user_categories %}
-                <option value="{{category}}">{{category}}</option>
+            <select class="custom-select mb-3" id="inputGroupSelect01" name="periodic_event_day">
+                <option selected>Día del evento</option>
+                {% for i in days %}
+                <option value="{{ i }}">{{ i }}</option>
                 {% endfor %}
             </select>
-
         </div>
+
     </div>
 
-    <br>
 
     <div class="container">
-        <div class="form-text">Registro de salidas de dinero.</div>
+        <div class="form-text">Crear evento fijo</div>
         <br>
         <div class="input-group mb-3">
-            <span class="input-group-text mb-3">Movimiento</span>
-            <textarea class="form-control mb-3" aria-label="With textarea" placeholder="nombre"
-                      name="exit_name"></textarea>
+            <span class="input-group-text mb-3">Evento</span>
+            <textarea class="form-control mb-3" aria-label="With textarea" placeholder="Nombre del evento"
+                      name="event_name"></textarea>
 
             <span class="input-group-text mb-3">Valor</span>
             <textarea class="form-control mb-3" aria-label="With textarea"
-                      placeholder="Valor" name="exit_value"></textarea>
+                      placeholder="Valor asociado al evento" name="event_value"></textarea>
 
-            <label class="input-group-text mb-3" for="inputGroupSelect02">Categoría</label>
-
-            <select class="custom-select mb-3" id="inputGroupSelect02" name="exit_category">
-                <option selected>Categoría</option>
-                {% for category in user_categories %}
-                <option value="{{category}}">{{category}}</option>
-                {% endfor %}
-            </select>
-
+            <span class="input-group-text mb-3">Fecha</span>
+            <textarea class="form-control mb-3" aria-label="With textarea" placeholder="AAAA/MM/DD"
+                      name="event_date"></textarea>
         </div>
-
-        <br>
-        <br>
-        <button type="submit" class="btn btn-primary mb-3"> Registrar Movimientos</button>
+        <button type="submit" class="btn btn-primary mb-3">Crear Evento</button>
     </div>
 </form>
 
-
-<br>
 <br>
 <br>
 
 <div class="container">
+    <h3>Eventos de hoy:</h3>
+    {% if not day_events %}
+    <h4>No hay eventos para el día de hoy</h4>
+
+    {% else %}
+
+    {% for idevent, iduser, name, daydate, value in day_events %}
+
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{ name.capitalize }}
+                        </h5>
+                        <p class="card-text">Valor: {{ value }} </p>
+                        {% if daydate == today %}
+                        <p class="card-text">Planeado para: {{ daydate }} de cada mes.</p>
+                        {% else %}
+                        <p class="card-text">Planeado para: {{ daydate }}.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+
+    {% endif %}
+
+    <br>
+    <br>
+
+    <h3>Eventos próximos</h3>
+    <h4>Eventos fijos</h4>
     <table>
         <tr>
             <th>Nombre</th>
-            <th>Dirección</th>
-            <th>Valor</th>
             <th>Fecha</th>
-            <th>Categoría</th>
+            <th>Valor</th>
         </tr>
-        {% for name, iduser, idmov, direction, value, date, category in movements %}
+        {% for idevent, iduser, name, date, value in user_events %}
+
         <tr>
             <td>{{ name }}</td>
-            <td>{{ direction }}</td>
-            <td>{{ value }}</td>
             <td>{{ date }}</td>
-            <td>{{ category }}</td>
+            <td>{{ value }}</td>
         </tr>
+
         {% endfor %}
     </table>
-</div>
 
+    <br>
+    <br>
+
+    <h4>Eventos Periódicos mensuales</h4>
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Día</th>
+            <th>Valor</th>
+        </tr>
+        {% for idevent, iduser, name, date, value in user_periodic_events %}
+
+        <tr>
+            <td>{{ name }}</td>
+            <td>{{ date }}</td>
+            <td>{{ value }}</td>
+        </tr>
+
+        {% endfor %}
+    </table>
+
+</div>
 
 </body>
 </html>

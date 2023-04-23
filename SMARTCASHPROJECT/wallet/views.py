@@ -3,6 +3,8 @@ from .forms import UserRegisterForm
 from wallet import movements as mov
 from wallet import connection
 from wallet import charts
+from datetime import date
+import datetime
 
 
 def home(request):
@@ -86,7 +88,7 @@ def categories(request):
     connection.current_user = request.user
     category = request.GET.get('category')
     category_to_create = request.GET.get('category_to_create')
-    if category_to_create:  # puede crear duplicados
+    if category_to_create:
         created = connection.create_category(category_to_create)
     matches = mov.consult_category(category)
     user_categories = [category[1] for category in connection.search_user_categories()]
@@ -123,3 +125,27 @@ def goals(request):
                   {'goal_name': goal_name, 'goal_value': goal_value, 'goal_date': goal_date, 'user_goals': user_goals})
 
 
+def events(request):
+    connection.current_user = request.user
+    periodic_event_name = request.GET.get('periodic_event_name')
+    periodic_event_value = request.GET.get('periodic_event_value')
+    periodic_event_day = request.GET.get('periodic_event_day')
+
+    event_name = request.GET.get('event_name')
+    event_value = request.GET.get('event_value')
+    event_date = request.GET.get('event_date')
+
+    if periodic_event_day and periodic_event_value and periodic_event_name:
+        connection.create_event(1, periodic_event_name, periodic_event_value, periodic_event_day)
+    if event_name and event_value and event_date:
+        connection.create_event(0, event_name, event_value, event_date)
+    user_events = connection.search_events()
+    user_periodic_events = connection.search_periodic_events()
+
+    day_events = connection.search_day_events(user_periodic_events, user_events)
+    return render(request, 'registration/events.html',
+                  {'days': range(1, 32), 'periodic_event_name': periodic_event_name,
+                   'periodic_event_value': periodic_event_value, 'periodic_event_day': periodic_event_day,
+                   'event_name': event_name, 'event_value': event_value, 'event_date': event_date,
+                   'user_events': user_events, 'user_periodic_events': user_periodic_events, 'day_events': day_events,
+                   'today': date.today().day})
