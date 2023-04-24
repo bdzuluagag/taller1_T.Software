@@ -32,4 +32,12 @@ def consult_category(category):
             f'nombre: {movement[0]}, {movement[3]}, valor: {movement[4]}, fecha: {movement[5].strftime("%m/%d/%Y")}, categoría: {movement[6]}')
     return ans
 
-
+def consult_user_lux():
+    movements = connection.search_user_movements()
+    dic = {}
+    for movement in movements:
+        if movement[6] in dic:
+            dic[movement[6]] += movement[4]
+        else:
+            dic[movement[6]] = movement[4]
+    return dic

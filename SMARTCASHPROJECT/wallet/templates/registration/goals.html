@@ -1,4 +1,8 @@
+{% extends 'base.html' %}
+
 <!DOCTYPE html>
+{% load static %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,53 +21,13 @@
 
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">SmartCash</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'goals' %}">Metas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'statistics' %}">Estadísticas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'suggestions' %}">Sugerencias</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'movements' %}">Movimientos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'categories' %}">Categorías</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'events' %}">Eventos</a>
-                    </li>
-                </ul>
-
-                <span class="navbar-text">
-		        Bienvenido, {{name}}
-		      </span>
-            </div>
-        </div>
-    </div>
-</nav>
+    {% block content %}
 <!-- TERMINA BARRA DE NAVEGACIÓN -->
 
 <form action="">
+    <br><br><br><br>
     <div class="container">
-        <div class="form-text">Crear Meta</div>
-        <br>
+        <p id="movimientos">Crear Meta</p>
         <div class="input-group mb-3">
             <span class="input-group-text mb-3">Meta</span>
             <textarea class="form-control mb-3" aria-label="With textarea" placeholder="Nombre"
@@ -78,21 +42,18 @@
                       name="goal_date"></textarea>
         </div>
         <button type="submit" class="btn btn-primary mb-3"> Crear Meta</button>
-    </div>
+    <br>
+    <br>
 </form>
 <!-- TERMINA CREACION DE META -->
 
-<div class="container">
-    <h2>Metas Creadas</h2>
-</div>
+<p id="movimientos">Metas Creadas</p>
 
 {% for idgoal, iduser, name, goaldate, value, current in user_goals %}
 
 <div class="container">
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-        <div class="col">
-            <div class="card h-100">
-                <div class="card-body">
+            <div class="card" style="width: 18rem;">
+                <div id="metas" class="card-body">
                     <h5 class="card-title">
                         {{ name }}
                     </h5>
@@ -104,8 +65,8 @@
             </div>
         </div>
     </div>
-</div>
-
 {% endfor %}
+{% endblock content %}
+
 </body>
 </html>

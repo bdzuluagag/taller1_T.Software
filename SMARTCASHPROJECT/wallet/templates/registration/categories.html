@@ -1,4 +1,6 @@
+{% extends 'base.html' %}
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
     <meta charset="utf-8">
@@ -17,58 +19,17 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">SmartCash</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Categorías</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'statistics' %}">Estadísticas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'suggestions' %}">Sugerencias</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'goals' %}">Metas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'movements' %}">Movimientos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'events' %}">Eventos</a>
-                    </li>
-                </ul>
-
-                <span class="navbar-text">
-		        Bienvenido, {{name}}
-		      </span>
-            </div>
-        </div>
-    </div>
-</nav>
-<br>
+    {% block content %}
+<br><br><br>
 <form action="">
     <div class="container">
-        <div class="form-text">Creación de categorías
-        </div>
+        <div id="movimientos" class="form-text">Creación de categorías</div>
         <br>
         <form action="">
             <div class="input-group">
                 <span class="input-group-text mb-3">Categoría</span>
                 <textarea class="form-control mb-3" aria-label="With textarea"
-                          placeholder="Ingrese el nombre de la categoría que quiere crear."
+                          placeholder="Ingrese el nombre de la categoría que quiere crear"
                           name="category_to_create"></textarea>
 
 
@@ -84,10 +45,10 @@
                 {% endif %}
                 {% endif %}
                 <br>
-                <div class="form-text">Categorías creadas: </div>
+                <div id="movimientos" class="form-text">Categorías creadas: </div>
                 <br>
                 {% for category in user_categories %}
-                <p>{{ category }}</p>
+                <p id="categorias">{{ category }}</p>
                 {% endfor %}
             </div>
         </form>
@@ -97,15 +58,15 @@
 
 <form action="">
     <div class="container">
-        <div class="form-text">Consulta de categorías de movimientos: Ingresa la categoría que quieres consultar y verás
-            los movimientos asociados a esa categoría.
-        </div>
+        <div id="movimientos" class="form-text">Consulta de categorías de movimientos: </div> <p id="Ingresa">Ingresa la categoría que quieres consultar y verás
+            los movimientos asociados a esa categoría</p>
+        
         <br>
         <form action="">
             <div class="input-group">
                 <span class="input-group-text mb-3">Categoría</span>
                 <textarea class="form-control mb-3" aria-label="With textarea"
-                          placeholder="Ingrese el nombre de la categoría que quiere consultar."
+                          placeholder="Ingrese el nombre de la categoría que desea consultar"
                           name="category"></textarea>
 
 
@@ -120,6 +81,6 @@
     </div>
     <br>
 </form>
-
+{% endblock content %}
 </body>
 </html>

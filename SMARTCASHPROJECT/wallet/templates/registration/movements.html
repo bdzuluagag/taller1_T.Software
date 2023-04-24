@@ -1,5 +1,7 @@
+{% extends 'base.html' %}
 <!DOCTYPE html>
-<html>
+{% load static %}
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,77 +17,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
-    <style>
-        table {
-          font-family: arial, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
-        }
 
-        td, th {
-          border: 1px solid #dddddd;
-          text-align: left;
-          padding: 8px;
-        }
-
-        tr:nth-child(even) {
-          background-color: #dddddd;
-        }
-    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">SmartCash</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'movements' %}">Movimientos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'statistics' %}">Estadísticas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'suggestions' %}">Sugerencias</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'goals' %}">Metas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'categories' %}">Categorías</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'events' %}">Eventos</a>
-                    </li>
-                </ul>
-
-                <span class="navbar-text">
-		        Bienvenido, {{name}}
-		      </span>
-            </div>
-        </div>
-    </div>
-</nav>
-
+    {% block content %}
 <!-- TERMINA BARRA DE NAVEGACIÓN -->
 
-<br>
 <form action="">
+    <br>
+    <br>
+    <br>
+    <br>
     <div class="container">
-        <div class="form-text">Registro de ingresos de dinero.</div>
-        <br>
+        <p id="movimientos">Registro de ingrersos de dinero</p>
+    
         <div class="input-group mb-3">
             <span class="input-group-text mb-3">Movimiento</span>
-            <textarea class="form-control mb-3" aria-label="With textarea" placeholder="nombre"
+            <textarea class="form-control mb-3" aria-label="With textarea" placeholder="Nombre"
                       name="income_name"></textarea>
 
             <span class="input-group-text mb-3">Valor</span>
@@ -104,14 +52,12 @@
         </div>
     </div>
 
-    <br>
-
     <div class="container">
-        <div class="form-text">Registro de salidas de dinero.</div>
-        <br>
+        <p id="movimientos">Registro de salidas de dinero</p>
+        
         <div class="input-group mb-3">
             <span class="input-group-text mb-3">Movimiento</span>
-            <textarea class="form-control mb-3" aria-label="With textarea" placeholder="nombre"
+            <textarea class="form-control mb-3" aria-label="With textarea" placeholder="Nombre"
                       name="exit_name"></textarea>
 
             <span class="input-group-text mb-3">Valor</span>
@@ -128,20 +74,14 @@
             </select>
 
         </div>
-
-        <br>
-        <br>
+        
         <button type="submit" class="btn btn-primary mb-3"> Registrar Movimientos</button>
     </div>
 </form>
 
-
-<br>
-<br>
-<br>
-
 <div class="container">
-    <table>
+    <p id="movimientos">Movimientos Registrados:</p>
+    <table class="table table-striped table-dark">
         <tr>
             <th>Nombre</th>
             <th>Dirección</th>
@@ -159,8 +99,9 @@
         </tr>
         {% endfor %}
     </table>
+    <br>
 </div>
 
-
+{% endblock content %}
 </body>
 </html>

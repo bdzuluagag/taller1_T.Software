@@ -108,7 +108,9 @@ def statistics(request):
 def suggestions(request):
     connection.current_user = request.user
     balance = connection.consult_user_balance()
-    return render(request, 'registration/suggestions.html', {'balance': balance})
+    dic_categories = mov.consult_user_lux()
+    lujos = dic_categories['lujos'] if 'lujos' in dic_categories else 0
+    return render(request, 'registration/suggestions.html', {'balance': balance, 'lujos': lujos})
 
 
 def goals(request):

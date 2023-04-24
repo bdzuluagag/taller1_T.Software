@@ -1,4 +1,7 @@
+{% extends 'base.html' %}
+
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,53 +19,11 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">SmartCash</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'suggestions' %}">Sugerencias</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'statistics' %}">Estadísticas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'movements' %}">Movimientos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'goals' %}">Metas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'categories' %}">Categorías</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'events' %}">Eventos</a>
-                    </li>
-                </ul>
-
-                <span class="navbar-text">
-		        Bienvenido, {{name}}
-		      </span>
-            </div>
-        </div>
-    </div>
-</nav>
-
-
+    {% block content %}
 <div class="container">
     <div class="row row-cols-1 row-cols-md-2 g-4">
         <div class="col">
-            <div class="card h-100">
+            <div id="homecard" class="card">
                 <img src="https://as1.ftcdn.net/v2/jpg/04/78/70/54/1000_F_478705423_5rnv3LFZc7A628M0WlfcbTUtKz3L9zzA.jpg"
                      class="card-img-top h-100" alt="...">
                 <div class="card-body">
@@ -79,7 +40,7 @@
         </div>
 
         <div class="col">
-            <div class="card h-100">
+            <div id="homecard" class="card">
                 <img src="https://cdn.forbes.com.mx/2022/03/GBM.Wealth.Managment-scaled.jpg"
                      class="card-img-top" alt="...">
                 <div class="card-body">
@@ -94,7 +55,7 @@
         </div>
 
         <div class="col">
-            <div class="card h-100">
+            <div class="card">
                 <img src="https://st2.depositphotos.com/1056393/6746/i/600/depositphotos_67469153-stock-photo-woman-window-shopping.jpg"
                      class="card-img-top" alt="...">
                 <div class="card-body">
@@ -112,7 +73,7 @@
 
 
         <div class="col">
-            <div class="card h-100">
+            <div class="card">
                 <img src="https://media.istockphoto.com/id/1065733544/photo/accounting-spread-sheets.jpg?s=612x612&w=0&k=20&c=zNHdJy0MZSrlVHzhMAgoBK6ulK6QCAL917dBxos_9C8="
                      class="card-img-top" alt="...">
                 <div class="card-body">
@@ -137,10 +98,47 @@
                 </div>
             </div>
         </div>
-
-
     </div>
+    <br>
+
 </div>
 <br>
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col">
+        <div class="card">
+            <img src="https://fotografias.lasexta.com/clipping/cmsimages01/2022/12/19/B27A30B1-703F-48F5-977C-427ACEFC3AC2/calendario-laboral-2023_98.jpg?crop=2127,1197,x0,y109&width=1900&height=1069&optimize=high&format=webply"
+                 class="card-img-top h-100" alt="...">
+            <div class="card-body">
+                <a href="{% url 'events' %}"
+                   class="card-title" target="blank">
+                    <h5 class="card-title">Eventos Importantes</h5>
+                </a>
+                <p class="card-text">Es vital que mantengas consciencia de los eventos próximos relacionados con tu
+                    vida financiera. En SmartCash puedes registrar eventos periódicos mensuales y eventos fijos que
+                    no se repetirán, y la plataforma te lo recordará el día que hayas asociado con el evento.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card ">
+            <img src="https://cloudfront-us-east-1.images.arcpublishing.com/infobae/6BW35PMWEJC6HMJ7FDRC3BAB7M.jpg"
+                 class="card-img-top" alt="...">
+            <div class="card-body">
+                <a href="https://www.bbva.com/es/pe/salud-financiera/que-son-los-gastos-hormiga-fantasma-y-vampiro-y-como-identificarlos/" class="card-title" target="_blank">
+                    <h5 class="card-title">Ten con los lujos y los gastos hormiga</h5>
+                </a>
+                <p class="card-text">Los gastos hormiga son aquellos gastos que parecen inofensivos, pero que con el
+                    tiempo terminan abarcando una considerable cantidad de dinero que podría ser mejor invertido en
+                    otras cosas de mayoer relevancia</p>
+                <p class="card-text">Actualmente, has registrado {{ lujos }} correspondiente a la categoría de
+                    lujos, ten siempre cuidado con no sobrepasar tus límites al comprar cosas que no necesitas.</p>
+            </div>
+        </div>
+        <br>
+        <br>
+    </div>
+
+</div>
+{% endblock content %}
 </body>
 </html>

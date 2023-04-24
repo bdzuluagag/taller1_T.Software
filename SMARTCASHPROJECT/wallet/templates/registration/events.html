@@ -1,4 +1,6 @@
+{% extends 'base.html' %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,80 +16,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
-    <style>
-        table {
-          font-family: arial, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
-        }
-
-        td, th {
-          border: 1px solid #dddddd;
-          text-align: left;
-          padding: 8px;
-        }
-
-        tr:nth-child(even) {
-          background-color: #dddddd;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
+    {% block content %}
 
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">SmartCash</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'events' %}">Eventos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'statistics' %}">Estadísticas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'suggestions' %}">Sugerencias</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'movements' %}">Movimientos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'categories' %}">Categorías</a>
-                    </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'goals' %}">Metas</a>
-                    </li>
-                </ul>
-
-                <span class="navbar-text">
-		        Bienvenido, {{name}}
-		      </span>
-            </div>
-        </div>
-    </div>
-</nav>
 <!-- TERMINA BARRA DE NAVEGACIÓN -->
-<br>
-<div class="container">
-    <h3>Crear eventos</h3>
-</div>
+<br><br><br>
+<div id="eventos"class="form-text">Crear eventos</div>
 
 
 <form action="">
     <div class="container">
-        <div class="form-text">Crear evento periódico</div>
         <br>
+        <p id = "movimientos">Crear evento periódico</p>
         <div class="input-group mb-3">
             <span class="input-group-text mb-3">Evento</span>
-            <textarea class="form-control mb-3" aria-label="With textarea" placeholder="nombre"
+            <textarea class="form-control mb-3" aria-label="With textarea" placeholder="Nombre"
                       name="periodic_event_name"></textarea>
 
             <span class="input-group-text mb-3">Valor</span>
@@ -108,8 +55,7 @@
 
 
     <div class="container">
-        <div class="form-text">Crear evento fijo</div>
-        <br>
+        <p id = "movimientos">Crear evento fijo</p>
         <div class="input-group mb-3">
             <span class="input-group-text mb-3">Evento</span>
             <textarea class="form-control mb-3" aria-label="With textarea" placeholder="Nombre del evento"
@@ -127,14 +73,12 @@
     </div>
 </form>
 
-<br>
-<br>
 
 <div class="container">
-    <h3>Eventos de hoy:</h3>
+    <div id="eventos"class="form-text">Eventos de hoy:</div>
+    <br>
     {% if not day_events %}
-    <h4>No hay eventos para el día de hoy</h4>
-
+    <p id="categorias">No hay eventos para el día de hoy</p>
     {% else %}
 
     {% for idevent, iduser, name, daydate, value in day_events %}
@@ -164,11 +108,11 @@
     {% endif %}
 
     <br>
-    <br>
-
-    <h3>Eventos próximos</h3>
-    <h4>Eventos fijos</h4>
-    <table>
+    
+<div id="eventos"class="form-text">Eventos próximos:</div>
+<br>
+<p id = "movimientos">Eventos fijos</p>
+<table class="table table-striped table-dark">
         <tr>
             <th>Nombre</th>
             <th>Fecha</th>
@@ -186,10 +130,9 @@
     </table>
 
     <br>
-    <br>
 
-    <h4>Eventos Periódicos mensuales</h4>
-    <table>
+    <p id = "movimientos">Eventos periódicos mensuales</p>
+    <table class="table table-striped table-dark">
         <tr>
             <th>Nombre</th>
             <th>Día</th>
@@ -205,8 +148,9 @@
 
         {% endfor %}
     </table>
-
+<br>
 </div>
+{% endblock content %}
 
 </body>
 </html>

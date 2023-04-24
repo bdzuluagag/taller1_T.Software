@@ -1,0 +1,5 @@
+Django~=4.1.7
+wallet~=2.1.525
+matplotlib~=3.7.1
+mysql~=0.0.3
+mysql-connector-python~=8.0.32
