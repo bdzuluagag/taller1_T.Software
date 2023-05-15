@@ -1,6 +1,53 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
+
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=50)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.usuario.__str__()} - {self.nombre}'
 
 
-    
+class Movimiento(models.Model):
+    nombre = models.CharField(max_length=100)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    direccion = models.CharField(max_length=10)
+    valor = models.IntegerField()
+    fecha = models.DateField()
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.usuario.__str__()} - {self.nombre}'
+
+
+class Meta(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=100)
+    fecha = models.DateField()
+    cantidad_meta = models.IntegerField()
+    cantidad_actual = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.usuario.__str__()} - {self.nombre}'
+
+
+class EventoFijo(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=100)
+    fecha = models.DateField()
+    cantidad = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.usuario.__str__()} - {self.nombre}'
+
+
+class EventoPeriodico(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=100)
+    dia = models.IntegerField()
+    cantidad = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.usuario.__str__()} - {self.nombre}'

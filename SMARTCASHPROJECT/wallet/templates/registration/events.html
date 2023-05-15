@@ -81,7 +81,7 @@
     <p id="categorias">No hay eventos para el día de hoy</p>
     {% else %}
 
-    {% for idevent, iduser, name, daydate, value in day_events %}
+    {% for event in day_events %}
 
     <div class="container">
         <div class="row row-cols-1 row-cols-md-2 g-4">
@@ -89,13 +89,13 @@
                 <div class="card h-100">
                     <div class="card-body">
                         <h5 class="card-title">
-                            {{ name.capitalize }}
+                            {{ event.nombre.capitalize }}
                         </h5>
-                        <p class="card-text">Valor: {{ value }} </p>
-                        {% if daydate == today %}
-                        <p class="card-text">Planeado para: {{ daydate }} de cada mes.</p>
+                        <p class="card-text">Valor: {{ event.cantidad }} </p>
+                        {% if event.dia %}
+                        <p class="card-text">Planeado para: {{ event.dia }} de cada mes.</p>
                         {% else %}
-                        <p class="card-text">Planeado para: {{ daydate }}.</p>
+                        <p class="card-text">Planeado para: {{ event.fecha }}.</p>
                         {% endif %}
                     </div>
                 </div>
@@ -118,12 +118,12 @@
             <th>Fecha</th>
             <th>Valor</th>
         </tr>
-        {% for idevent, iduser, name, date, value in user_events %}
+        {% for event in user_events %}
 
         <tr>
-            <td>{{ name }}</td>
-            <td>{{ date }}</td>
-            <td>{{ value }}</td>
+            <td>{{ event.nombre }}</td>
+            <td>{{ event.fecha }}</td>
+            <td>{{ event.cantidad }}</td>
         </tr>
 
         {% endfor %}
@@ -138,12 +138,12 @@
             <th>Día</th>
             <th>Valor</th>
         </tr>
-        {% for idevent, iduser, name, date, value in user_periodic_events %}
+        {% for event in user_periodic_events %}
 
         <tr>
-            <td>{{ name }}</td>
-            <td>{{ date }}</td>
-            <td>{{ value }}</td>
+            <td>{{ event.nombre }}</td>
+            <td>{{ event.dia }}</td>
+            <td>{{ event.cantidad }}</td>
         </tr>
 
         {% endfor %}

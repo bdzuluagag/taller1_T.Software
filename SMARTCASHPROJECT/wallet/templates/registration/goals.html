@@ -49,19 +49,19 @@
 
 <p id="movimientos">Metas Creadas</p>
 
-{% for idgoal, iduser, name, goaldate, value, current in user_goals %}
+{% for goal in user_goals %}
 
 <div class="container">
     <br>
             <div class="card" style="width: 18rem;">
                 <div id="metas" class="card-body">
                     <h5 class="card-title">
-                        {{ name }}
+                        {{ goal.nombre }}
                     </h5>
                     <p class="card-text">Progreso: </p>
-                    <p class="card-text">{{ current }} / {{ value }}</p>
-                    <progress id="file" value="{{ current }}" max="{{ value }}"></progress>
-                    <p class="card-text">Planeado para: {{ goaldate }}</p>
+                    <p class="card-text">{{ goal.cantidad_actual }} / {{ goal.cantidad_meta }}</p>
+                    <progress id="file" value="{{ goal.cantidad_actual }}" max="{{ goal.cantidad_meta }}"></progress>
+                    <p class="card-text">Planeado para: {{ goal.fecha }}</p>
                 </div>
             </div>
 

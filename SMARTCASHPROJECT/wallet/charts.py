@@ -10,10 +10,10 @@ def create_charts(movements):
 def pie_chart_movements(movements):
     categories = {}
     for movement in movements:
-        if movement[-1] in categories:
-            categories[movement[-1]] += movement[4]
+        if movement.categoria in categories:
+            categories[movement.categoria] += movement.valor
         else:
-            categories[movement[-1]] = movement[4]
+            categories[movement.categoria] = movement.valor
     values, labels = categories.values(), categories.keys()
     plt.figure()
     plt.pie(values, labels=labels)
@@ -24,10 +24,10 @@ def pie_chart_movements(movements):
 def pie_chart_movements_direction(movements, direction):
     categories = {}
     for movement in movements:
-        if movement[-1] in categories:
-            categories[movement[-1]] += movement[4]
+        if movement.categoria in categories:
+            categories[movement.categoria] += movement.valor
         else:
-            categories[movement[-1]] = movement[4]
+            categories[movement.categoria] = movement.valor
     values, labels = categories.values(), categories.keys()
     plt.figure()
     plt.pie(values, labels=labels, autopct='%1.0f%%')
@@ -38,10 +38,10 @@ def pie_chart_movements_direction(movements, direction):
 def line_chart_date(movements):
     dates = {}
     for movement in movements:
-        if movement[5] in dates:
-            dates[movement[5]] += movement[4]
+        if movement.fecha in dates:
+            dates[movement.fecha] += movement.valor
         else:
-            dates[movement[5]] = movement[4]
+            dates[movement.fecha] = movement.valor
     figure = plt.figure()
     values, labels = dates.values(), [x.strftime("%m/%d/%Y") for x in dates.keys()]
     plt.plot(labels, values, figure=figure)
@@ -54,10 +54,10 @@ def line_chart_date(movements):
 def line_chart_date_direction(movements, direction):
     dates = {}
     for movement in movements:
-        if movement[5] in dates:
-            dates[movement[5]] += movement[4]
+        if movement.fecha in dates:
+            dates[movement.fecha] += movement.valor
         else:
-            dates[movement[5]] = movement[4]
+            dates[movement.fecha] = movement.valor
     figure = plt.figure()
     values, labels = dates.values(), [x.strftime("%m/%d/%Y") for x in dates.keys()]
     plt.plot(labels, values, figure=figure, color='blue' if direction == 'entrada' else 'red')

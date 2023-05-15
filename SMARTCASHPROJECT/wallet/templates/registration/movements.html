@@ -89,13 +89,13 @@
             <th>Fecha</th>
             <th>Categoría</th>
         </tr>
-        {% for name, iduser, idmov, direction, value, date, category in movements %}
+        {% for move in movements %}
         <tr>
-            <td>{{ name }}</td>
-            <td>{{ direction }}</td>
-            <td>{{ value }}</td>
-            <td>{{ date }}</td>
-            <td>{{ category }}</td>
+            <td>{{ move.nombre }}</td>
+            <td>{{ move.direccion }}</td>
+            <td>{{ move.valor }}</td>
+            <td>{{ move.fecha }}</td>
+            <td>{{ move.categoria.nombre }}</td>
         </tr>
         {% endfor %}
     </table>

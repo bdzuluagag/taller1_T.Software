@@ -11,6 +11,8 @@ def home(request):
     connection.current_user = request.user
     current_user = request.user
     print('user', current_user.username)
+    if request.user.is_authenticated and len(connection.search_user_categories(request.user)) == 0:
+        connection.create_default_categories(request.user)
     return render(request, 'registration/home.html')
 
 
@@ -71,8 +73,8 @@ def movements(request):
 
     exits = f'{exit_name}, {exit_value}, {exit_category}' if exit_category and exit_name and exit_value else None
 
-    movements = mov.read_movements(incomes, exits)
-    user_categories = [category[1] for category in connection.search_user_categories()]
+    movements = mov.read_movements(incomes, exits, request.user)
+    user_categories = [category.nombre for category in connection.search_user_categories(request.user)]
 
     return render(request, 'registration/movements.html', {'average_income': average_income,
                                                            'life_cost_average': life_cost_average,
@@ -89,26 +91,26 @@ def categories(request):
     category = request.GET.get('category')
     category_to_create = request.GET.get('category_to_create')
     if category_to_create:
-        created = connection.create_category(category_to_create)
-    matches = mov.consult_category(category)
-    user_categories = [category[1] for category in connection.search_user_categories()]
+        created = connection.create_category(category_to_create, request.user)
+    matches = mov.consult_category(category, request.user)
+    user_categories = [category.nombre for category in connection.search_user_categories(request.user)]
     return render(request, 'registration/categories.html',
                   {'category': category, 'matches': matches, 'created': created, 'user_categories': user_categories})
 
 
 def statistics(request):
     connection.current_user = request.user
-    charts.pie_chart_movements_direction(connection.search_user_movement_direction('entrada'), 'entrada')
-    charts.pie_chart_movements_direction(connection.search_user_movement_direction('salida'), 'salida')
-    charts.line_chart_date_direction(connection.search_user_movement_direction('entrada'), 'entrada')
-    charts.line_chart_date_direction(connection.search_user_movement_direction('salida'), 'salida')
+    charts.pie_chart_movements_direction(connection.search_user_movement_direction('entrada', request.user), 'entrada')
+    charts.pie_chart_movements_direction(connection.search_user_movement_direction('salida', request.user), 'salida')
+    charts.line_chart_date_direction(connection.search_user_movement_direction('entrada', request.user), 'entrada')
+    charts.line_chart_date_direction(connection.search_user_movement_direction('salida', request.user), 'salida')
     return render(request, 'registration/statistics.html')
 
 
 def suggestions(request):
     connection.current_user = request.user
-    balance = connection.consult_user_balance()
-    dic_categories = mov.consult_user_lux()
+    balance = connection.consult_user_balance(request.user)
+    dic_categories = mov.consult_user_lux(request.user)
     lujos = dic_categories['lujos'] if 'lujos' in dic_categories else 0
     return render(request, 'registration/suggestions.html', {'balance': balance, 'lujos': lujos})
 
@@ -119,9 +121,9 @@ def goals(request):
     goal_value = request.GET.get('goal_value')
     goal_date = request.GET.get('goal_date')
     if goal_date and goal_name and goal_value:
-        connection.create_goal(goal_name, goal_value, goal_date)
-        connection.create_category(goal_name)
-    user_goals = connection.search_user_goals()
+        connection.create_goal(goal_name, goal_value, goal_date, request.user)
+        connection.create_category(goal_name, request.user)
+    user_goals = connection.search_user_goals(request.user)
     print(user_goals)
     return render(request, 'registration/goals.html',
                   {'goal_name': goal_name, 'goal_value': goal_value, 'goal_date': goal_date, 'user_goals': user_goals})
@@ -138,11 +140,11 @@ def events(request):
     event_date = request.GET.get('event_date')
 
     if periodic_event_day and periodic_event_value and periodic_event_name:
-        connection.create_event(1, periodic_event_name, periodic_event_value, periodic_event_day)
+        connection.create_event(1, periodic_event_name, periodic_event_value, periodic_event_day, request.user)
     if event_name and event_value and event_date:
-        connection.create_event(0, event_name, event_value, event_date)
-    user_events = connection.search_events()
-    user_periodic_events = connection.search_periodic_events()
+        connection.create_event(0, event_name, event_value, event_date, request.user)
+    user_events = connection.search_events(request.user)
+    user_periodic_events = connection.search_periodic_events(request.user)
 
     day_events = connection.search_day_events(user_periodic_events, user_events)
     return render(request, 'registration/events.html',

@@ -1,43 +1,40 @@
 from wallet import connection
 
 
-def readIncomes(movements):
+def readIncomes(movements, user):
     if not movements:
         return
     movements = movements.split('.')
-    connection.create_movement(movements, 'entrada')
+    connection.create_movement(movements, 'entrada', user)
 
 
-def readExits(movements):
+def readExits(movements, user):
     if not movements:
         return
     movements = movements.split('.')
-    connection.create_movement(movements, 'salida')
+    connection.create_movement(movements, 'salida', user)
 
 
-def read_movements(incomes, exits):
-    readExits(exits)
-    readIncomes(incomes)
-    movements = connection.search_user_movements()
+def read_movements(incomes, exits, user):
+    readExits(exits, user)
+    readIncomes(incomes, user)
+    movements = connection.search_user_movements(user)
     return movements
 
 
-def consult_category(category):
+def consult_category(category, user):
     if not category:
         return
-    movements = connection.search_movement_category(category)
-    ans = []
-    for movement in movements:
-        ans.append(
-            f'nombre: {movement[0]}, {movement[3]}, valor: {movement[4]}, fecha: {movement[5].strftime("%m/%d/%Y")}, categoría: {movement[6]}')
-    return ans
+    movements = connection.search_movement_category(category, user)
+    return movements
 
-def consult_user_lux():
-    movements = connection.search_user_movements()
+
+def consult_user_lux(user):
+    movements = connection.search_user_movements(user)
     dic = {}
     for movement in movements:
-        if movement[6] in dic:
-            dic[movement[6]] += movement[4]
+        if movement.categoria in dic:
+            dic[movement.categoria] += movement.valor
         else:
-            dic[movement[6]] = movement[4]
+            dic[movement.categoria] = movement.valor
     return dic
