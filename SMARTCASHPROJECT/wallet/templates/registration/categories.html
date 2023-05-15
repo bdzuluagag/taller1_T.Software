@@ -39,9 +39,9 @@
 
                 {% if created is not None %}
                 {% if not created%}
-                <p>La categoría fue creada con éxito</p>
+                <p id="Ingresa">La categoría fue creada con éxito</p>
                 {% else %}
-                <p>La categoría a crear ya existe</p>
+                <p id="Ingresa">La categoría a crear ya existe</p>
                 {% endif %}
                 {% endif %}
                 <br>
@@ -75,7 +75,7 @@
         </form>
         <ul>
             {% for match in matches %}
-            <p>{{match}}</p>
+            <p id="categorias">{{match}}</p>
             {% endfor %}
         </ul>
     </div>

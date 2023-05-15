@@ -52,6 +52,7 @@
 {% for idgoal, iduser, name, goaldate, value, current in user_goals %}
 
 <div class="container">
+    <br>
             <div class="card" style="width: 18rem;">
                 <div id="metas" class="card-body">
                     <h5 class="card-title">
@@ -63,7 +64,7 @@
                     <p class="card-text">Planeado para: {{ goaldate }}</p>
                 </div>
             </div>
-        </div>
+
     </div>
 {% endfor %}
 {% endblock content %}
