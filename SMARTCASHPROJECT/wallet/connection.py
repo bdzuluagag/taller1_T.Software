@@ -17,7 +17,6 @@ def create_default_categories(user):
 
 def search_category_by_name(category, user):
     ans = Categoria.objects.all().filter(usuario=user, nombre=category.lower())
-    print(ans)
     return ans[0] if ans else ans
 
 
