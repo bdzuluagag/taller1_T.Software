@@ -1,0 +1,11 @@
+nombre,direccion,valor,fecha,categoria
+Salario,entrada,100000,2023-05-15,fijos
+zapatos,salida,1000,2023-05-15,lujos
+pago carro,salida,1000000,2023-05-15,carro
+pago casa,salida,20000000,2023-05-15,casa
+pago casa2,salida,2000000,2023-05-15,casa
+pago casa 100,salida,9000000,2023-05-15,casa
+casa19,salida,30000000,2023-05-15,casa
+arriendo,salida,200000,2023-05-16,esenciales
+salario,entrada,100000,2023-05-16,fijos
+pago prestamo carro,salida,1000000,2023-05-16,carro

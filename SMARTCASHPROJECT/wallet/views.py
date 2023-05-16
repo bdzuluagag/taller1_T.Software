@@ -4,7 +4,11 @@ from wallet import movements as mov
 from wallet import connection
 from wallet import charts
 from datetime import date
+import os
+from django.conf import settings
+from django.http import HttpResponse
 import datetime
+from wallet import dummy
 
 
 def home(request):
@@ -65,15 +69,23 @@ def movements(request):
     exit_value = request.GET.get('exit_value')
     exit_category = request.GET.get('exit_category')
 
-    print(income_name)
-    print(income_value)
-    print(income_category)
-
     incomes = f'{income_name}, {income_value}, {income_category}' if income_value and income_category and income_name else None
 
     exits = f'{exit_name}, {exit_value}, {exit_category}' if exit_category and exit_name and exit_value else None
 
-    movements = mov.read_movements(incomes, exits, request.user)
+    user_movements = mov.read_movements(incomes, exits, request.user)
+
+    download_movements = request.GET.get('download_movements')
+    if download_movements == '':
+        mov.generate_movements_csv(user_movements, request.user)
+        file_path = os.path.join(settings.MEDIA_ROOT, f'static/user_movements/{request.user.username}_movements.csv')
+        if os.path.exists(file_path):
+            with open(file_path, 'rb') as file:
+                response = HttpResponse(file.read(), content_type='application/octet-stream')
+                response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(file_path)
+                return response
+        else:
+            return HttpResponse('El archivo no existe.')
     user_categories = [category.nombre for category in connection.search_user_categories(request.user)]
 
     return render(request, 'registration/movements.html', {'average_income': average_income,
@@ -82,7 +94,7 @@ def movements(request):
                                                            'month_life_expenses': month_life_expenses,
                                                            'month_expenses': month_expenses,
                                                            'current_savings': current_savings,
-                                                           'movements': movements, 'user_categories': user_categories})
+                                                           'movements': user_movements, 'user_categories': user_categories})
 
 
 def categories(request):
@@ -92,6 +104,7 @@ def categories(request):
     category_to_create = request.GET.get('category_to_create')
     if category_to_create:
         created = connection.create_category(category_to_create, request.user)
+
     matches = mov.consult_category(category, request.user)
     user_categories = [category.nombre for category in connection.search_user_categories(request.user)]
     return render(request, 'registration/categories.html',

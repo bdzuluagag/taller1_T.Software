@@ -20,7 +20,7 @@
 
 </head>
 <body>
-    {% block content %}
+{% block content %}
 <!-- TERMINA BARRA DE NAVEGACIÓN -->
 
 <form action="">
@@ -30,7 +30,7 @@
     <br>
     <div class="container">
         <p id="movimientos">Registro de ingrersos de dinero</p>
-    
+
         <div class="input-group mb-3">
             <span class="input-group-text mb-3">Movimiento</span>
             <textarea class="form-control mb-3" aria-label="With textarea" placeholder="Nombre"
@@ -54,7 +54,7 @@
 
     <div class="container">
         <p id="movimientos">Registro de salidas de dinero</p>
-        
+
         <div class="input-group mb-3">
             <span class="input-group-text mb-3">Movimiento</span>
             <textarea class="form-control mb-3" aria-label="With textarea" placeholder="Nombre"
@@ -74,34 +74,35 @@
             </select>
 
         </div>
-        
+
         <button type="submit" class="btn btn-primary mb-3"> Registrar Movimientos</button>
     </div>
 </form>
-
-<div class="container">
-    <p id="movimientos">Movimientos Registrados:</p>
-    <table class="table table-striped table-dark">
-        <tr>
-            <th>Nombre</th>
-            <th>Dirección</th>
-            <th>Valor</th>
-            <th>Fecha</th>
-            <th>Categoría</th>
-        </tr>
-        {% for move in movements %}
-        <tr>
-            <td>{{ move.nombre }}</td>
-            <td>{{ move.direccion }}</td>
-            <td>{{ move.valor }}</td>
-            <td>{{ move.fecha }}</td>
-            <td>{{ move.categoria.nombre }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <br>
-</div>
-
+<form action="">
+    <div class="container">
+        <p id="movimientos">Movimientos Registrados:</p>
+        <table class="table table-striped table-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Valor</th>
+                <th>Fecha</th>
+                <th>Categoría</th>
+            </tr>
+            {% for move in movements %}
+            <tr>
+                <td>{{ move.nombre }}</td>
+                <td>{{ move.direccion }}</td>
+                <td>{{ move.valor }}</td>
+                <td>{{ move.fecha }}</td>
+                <td>{{ move.categoria.nombre }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+    </div>
+    <button type="submit" class="btn btn-primary mb-3" name="download_movements">Descargar Registro de movimientos</button>
+</form>
 {% endblock content %}
 </body>
 </html>

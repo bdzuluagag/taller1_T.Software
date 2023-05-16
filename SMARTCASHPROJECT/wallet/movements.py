@@ -1,4 +1,5 @@
 from wallet import connection
+import csv
 
 
 def readIncomes(movements, user):
@@ -38,3 +39,13 @@ def consult_user_lux(user):
         else:
             dic[movement.categoria] = movement.valor
     return dic
+
+
+def generate_movements_csv(movements, user):
+    with open(f'static/user_movements/{user.username}_movements.csv', 'w', encoding='UTF8') as file:
+        writer = csv.writer(file)
+        header = ['nombre', 'direccion', 'valor', 'fecha', 'categoria']
+        writer.writerow(header)
+        for movement in movements:
+            line = [movement.nombre, movement.direccion, movement.valor, movement.fecha.__str__(), movement.categoria.nombre]
+            writer.writerow(line)
