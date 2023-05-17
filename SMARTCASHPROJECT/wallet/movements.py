@@ -43,7 +43,7 @@ def consult_user_lux(user):
 
 
 def generate_movements_csv(movements, user):
-    with open(f'static/user_movements/{user.username}_movements.csv', 'w', encoding='UTF8') as file:
+    with open(f'static/user_movements/{user.username}_movements.csv', 'w', encoding='UTF-8') as file:
         writer = csv.writer(file)
         header = ['nombre', 'direccion', 'valor', 'fecha', 'categoria']
         writer.writerow(header)
@@ -53,7 +53,6 @@ def generate_movements_csv(movements, user):
 
 
 def date_estimated(goals):
-    dates = []
     for goal in goals:
         passed_days = (datetime.today().date() - goal.fecha_creacion).days
         if goal.cantidad_actual != 0:
