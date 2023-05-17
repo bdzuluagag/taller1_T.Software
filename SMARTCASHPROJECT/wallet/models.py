@@ -26,8 +26,10 @@ class Meta(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=100)
     fecha = models.DateField()
+    fecha_creacion = models.DateField(null=True, blank=True)
     cantidad_meta = models.IntegerField()
     cantidad_actual = models.IntegerField()
+    dias_estimados = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.usuario.__str__()} - {self.nombre}'

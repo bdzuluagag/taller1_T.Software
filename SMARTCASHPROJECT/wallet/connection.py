@@ -1,6 +1,5 @@
 import datetime
 from .models import Categoria, Movimiento, Meta, EventoFijo, EventoPeriodico
-import mysql.connector
 from datetime import date, datetime
 
 
@@ -81,7 +80,7 @@ def search_user_categories(user):
 
 
 def create_goal(name, value, goal_date, user):
-    goal = Meta(usuario=user, nombre=name, cantidad_meta=value, fecha=datetime.strptime(goal_date, '%Y/%m/%d').date(), cantidad_actual=0)
+    goal = Meta(usuario=user, nombre=name, cantidad_meta=value, fecha=datetime.strptime(goal_date, '%Y/%m/%d').date(), cantidad_actual=0, fecha_creacion=date.today())
     goal.save()
 
 

@@ -14,7 +14,6 @@ from wallet import dummy
 def home(request):
     connection.current_user = request.user
     current_user = request.user
-    print('user', current_user.username)
     if request.user.is_authenticated and len(connection.search_user_categories(request.user)) == 0:
         connection.create_default_categories(request.user)
     return render(request, 'registration/home.html')
@@ -25,7 +24,6 @@ def register(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            connection.create_user(form.cleaned_data)
             return redirect('home')
     else:
         form = UserRegisterForm()
@@ -134,12 +132,12 @@ def goals(request):
     goal_value = request.GET.get('goal_value')
     goal_date = request.GET.get('goal_date')
     if goal_date and goal_name and goal_value:
-        connection.create_goal(goal_name, goal_value, goal_date, request.user)
+        connection.create_goal(goal_name.lower(), goal_value, goal_date, request.user)
         connection.create_category(goal_name, request.user)
     user_goals = connection.search_user_goals(request.user)
-    print(user_goals)
+    user_estimated_dates = mov.date_estimated(user_goals)
     return render(request, 'registration/goals.html',
-                  {'goal_name': goal_name, 'goal_value': goal_value, 'goal_date': goal_date, 'user_goals': user_goals})
+                  {'goal_name': goal_name, 'goal_value': goal_value, 'goal_date': goal_date, 'user_goals': user_goals, 'estimated_dates': user_estimated_dates})
 
 
 def events(request):

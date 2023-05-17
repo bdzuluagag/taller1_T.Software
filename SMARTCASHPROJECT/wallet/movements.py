@@ -1,5 +1,6 @@
 from wallet import connection
 import csv
+from datetime import datetime
 
 
 def readIncomes(movements, user):
@@ -49,3 +50,13 @@ def generate_movements_csv(movements, user):
         for movement in movements:
             line = [movement.nombre, movement.direccion, movement.valor, movement.fecha.__str__(), movement.categoria.nombre]
             writer.writerow(line)
+
+
+def date_estimated(goals):
+    dates = []
+    for goal in goals:
+        passed_days = (datetime.today().date() - goal.fecha_creacion).days
+        if goal.cantidad_actual != 0:
+            estimated = (goal.cantidad_meta * passed_days / goal.cantidad_actual) - passed_days
+            goal.dias_estimados = int(round(estimated))
+            goal.save()
