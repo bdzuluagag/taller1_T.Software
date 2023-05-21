@@ -36,9 +36,9 @@ def consult_user_lux(user):
     dic = {}
     for movement in movements:
         if movement.categoria in dic:
-            dic[movement.categoria] += movement.valor
+            dic[movement.categoria.nombre] += movement.valor
         else:
-            dic[movement.categoria] = movement.valor
+            dic[movement.categoria.nombre] = movement.valor
     return dic
 
 
@@ -56,6 +56,6 @@ def date_estimated(goals):
     for goal in goals:
         passed_days = (datetime.today().date() - goal.fecha_creacion).days
         if goal.cantidad_actual != 0:
-            estimated = (goal.cantidad_meta * passed_days / goal.cantidad_actual) - passed_days
+            estimated = (goal.cantidad_meta * (passed_days + 1 if passed_days == 0 else passed_days) / goal.cantidad_actual) - passed_days
             goal.dias_estimados = int(round(estimated))
             goal.save()
