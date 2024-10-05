@@ -112,11 +112,18 @@ def categories(request):
 
 def statistics(request):
     connection.current_user = request.user
-    charts.pie_chart_movements_direction(connection.search_user_movement_direction('entrada', request.user), 'entrada')
-    charts.pie_chart_movements_direction(connection.search_user_movement_direction('salida', request.user), 'salida')
-    charts.line_chart_date_direction(connection.search_user_movement_direction('entrada', request.user), 'entrada')
-    charts.line_chart_date_direction(connection.search_user_movement_direction('salida', request.user), 'salida')
+    entrada_movements = connection.search_user_movement_direction('entrada', request.user)
+    salida_movements = connection.search_user_movement_direction('salida', request.user)
+    
+    print(f"Movimientos de entrada: {len(entrada_movements)}")  # Agrega esta línea
+    print(f"Movimientos de salida: {len(salida_movements)}")  # Agrega esta línea
+
+    charts.pie_chart_movements_direction(entrada_movements, 'entrada')
+    charts.pie_chart_movements_direction(salida_movements, 'salida')
+    charts.line_chart_date_direction(entrada_movements, 'entrada')
+    charts.line_chart_date_direction(salida_movements, 'salida')
     return render(request, 'registration/statistics.html')
+
 
 
 def suggestions(request):

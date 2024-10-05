@@ -30,39 +30,34 @@ def create_movement(movements, direction, user):
             if goal.nombre == category.nombre:
                 goal.cantidad_actual += int(value)
                 goal.save()
-        new_movement = Movimiento(nombre=name, usuario=user, valor=value, categoria=category, fecha=date.today(), direccion=direction)
+        new_movement = Movimiento(nombre=name, valor=value, categoria=category, fecha=date.today(), direccion=direction)
         new_movement.save()
 
 
 def search_user_movements(user):
-    moves = Movimiento.objects.all().filter(usuario=user)
+    moves = Movimiento.objects.all().filter(categoria__usuario=user)
     return moves
-
-
-current_user = None
 
 
 def search_movement_category(category, user):
     category = search_category_by_name(category, user)
-    moves = Movimiento.objects.all().filter(categoria=category, usuario=user) if category else None
-
+    moves = Movimiento.objects.all().filter(categoria=category) if category else None
     return moves
 
 
 def search_user_movement_direction(direction, user):
-    moves = Movimiento.objects.all().filter(direccion=direction, usuario=user)
+    moves = Movimiento.objects.all().filter(direccion=direction, categoria__usuario=user)
     return moves
 
 
 def consult_user_balance(user):
-    moves = Movimiento.objects.all().filter(usuario=user)
+    moves = Movimiento.objects.all().filter(categoria__usuario=user)
     user_balance = 0
     for move in moves:
         if move.direccion == 'salida':
             user_balance -= move.valor
         else:
             user_balance += move.valor
-
     return user_balance
 
 
@@ -120,4 +115,3 @@ def search_day_events(periodic, events):
             if event.fecha == current_date:
                 ans.append(event)
     return ans
-

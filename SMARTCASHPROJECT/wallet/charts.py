@@ -53,8 +53,13 @@ def line_chart_date_direction(movements, direction):
     for movement in movements:
         if movement.fecha in dates:
             dates[movement.fecha] += movement.valor
+            print(f"Sumando {movement.valor} a la fecha {movement.fecha}: {dates[movement.fecha]}")  # Agrega esta línea
         else:
             dates[movement.fecha] = movement.valor
+
+            
+    print(f"Datos para {direction}: {dates}")  # Agrega esta línea
+
     figure = plt.figure()
     values, labels = dates.values(), [x.strftime("%m/%d/%Y") for x in dates.keys()]
     plt.plot(labels, values, figure=figure, color='blue' if direction == 'entrada' else 'red')

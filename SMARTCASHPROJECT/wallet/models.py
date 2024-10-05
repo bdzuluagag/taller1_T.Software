@@ -12,14 +12,13 @@ class Categoria(models.Model):
 
 class Movimiento(models.Model):
     nombre = models.CharField(max_length=100)
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     direccion = models.CharField(max_length=10)
     valor = models.IntegerField()
     fecha = models.DateField()
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.usuario.__str__()} - {self.nombre}'
+        return f'{self.categoria.usuario.__str__()} - {self.nombre}'
 
 
 class Meta(models.Model):
