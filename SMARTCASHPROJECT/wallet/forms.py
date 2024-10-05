@@ -13,3 +13,10 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = UserCreationForm.Meta.fields + ('name', 'last_name', 'email',)
         help_texts = {k:"" for k in fields}
+
+from .models import Categoria
+
+class CategoriaForm(forms.ModelForm):
+    class Meta:
+        model = Categoria
+        fields = ['nombre']

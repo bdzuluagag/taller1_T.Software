@@ -1,0 +1,18 @@
+<!-- registration/categoria_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="categoria-container">
+    <h2 class="categoria-title">Categorías</h2>
+    <a class="categoria-create-link" href="{% url 'categoria_create' %}">Crear nueva categoría</a>
+    <ul class="categoria-list">
+        {% for categoria in categorias %}
+            <li class="categoria-item">
+                {{ categoria.nombre }} 
+                <a class="categoria-edit-link" href="{% url 'categoria_update' categoria.pk %}">Editar</a> 
+                <a class="categoria-delete-link" href="{% url 'categoria_delete' categoria.pk %}">Eliminar</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

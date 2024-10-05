@@ -182,3 +182,45 @@ def events(request):
                    'event_name': event_name, 'event_value': event_value, 'event_date': event_date,
                    'user_events': user_events, 'user_periodic_events': user_periodic_events, 'day_events': day_events,
                    'today': date.today().day})
+
+from django.shortcuts import get_object_or_404
+from .models import Categoria
+from .forms import CategoriaForm
+
+# Vista para crear una nueva categoría
+def categoria_create(request):
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            categoria = form.save(commit=False)
+            categoria.usuario = request.user  # Asocia la categoría al usuario actual
+            categoria.save()
+            return redirect('categoria_list')
+    else:
+        form = CategoriaForm()
+    return render(request, 'registration/categoria_form.html', {'form': form})
+
+# Vista para listar todas las categorías
+def categoria_list(request):
+    categorias = Categoria.objects.filter(usuario=request.user)
+    return render(request, 'registration/categoria_list.html', {'categorias': categorias})
+
+# Vista para actualizar una categoría
+def categoria_update(request, pk):
+    categoria = get_object_or_404(Categoria, pk=pk, usuario=request.user)
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST, instance=categoria)
+        if form.is_valid():
+            form.save()
+            return redirect('categoria_list')
+    else:
+        form = CategoriaForm(instance=categoria)
+    return render(request, 'registration/categoria_form.html', {'form': form})
+
+# Vista para borrar una categoría
+def categoria_delete(request, pk):
+    categoria = get_object_or_404(Categoria, pk=pk, usuario=request.user)
+    if request.method == 'POST':
+        categoria.delete()
+        return redirect('categoria_list')
+    return render(request, 'registration/categoria_confirm_delete.html', {'categoria': categoria})

@@ -228,3 +228,81 @@ body{
     }
 
 }
+
+/* Unique styles for categoria_list */
+.categoria-container {
+    margin-top: 100px; /* Space above the category section */
+    padding: 15px; /* Inner padding */
+    background-color: #2C3034; /* Light background for separation */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    width: 100%; /* Full width */
+}
+
+.categoria-title {
+    font-size: 24px; /* Title size */
+    margin-bottom: 10px; /* Space below the title */
+    color: #FFFFFF;
+}
+
+.categoria-create-link {
+    display: inline-block; /* Make the link a block */
+    margin-bottom: 15px; /* Space below the create link */
+    color: #007BFF; /* Link color */
+    text-decoration: none; /* Remove underline */
+}
+
+.categoria-list {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+}
+
+.categoria-item {
+    margin: 8px 0; /* Space between items */
+    padding: 10px; /* Inner padding for items */
+    border: 1px solid #ddd; /* Light border for each item */
+    border-radius: 4px; /* Rounded corners for items */
+    background-color: #ffffff; /* White background for items */
+    transition: background-color 0.3s; /* Smooth background change */
+}
+
+.categoria-item:hover {
+    background-color: #f1f1f1; /* Light gray on hover */
+}
+
+.categoria-edit-link,
+.categoria-delete-link {
+    margin-left: 10px; /* Space between links */
+    color: #dc3545; /* Red color for delete link */
+    text-decoration: none; /* Remove underline */
+}
+
+.categoria-edit-link:hover,
+.categoria-delete-link:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+.categoria-container button {
+    background-color: #007BFF; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners for button */
+    padding: 10px 15px; /* Padding inside the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Button text size */
+    margin-top: 10px; /* Space above the button */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.categoria-container button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.categoria-container p {
+    color: #FFFFFF;
+}
+
+.categoria-container input {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+}

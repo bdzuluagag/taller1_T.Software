@@ -1,0 +1,14 @@
+<!-- registration/categoria_form.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="categoria-container">
+    <h2 class="categoria-title">{% if form.instance.pk %}Editar{% else %}Crear{% endif %} Categoría</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar</button>
+    </form>
+    <a class="categoria-create-link" href="{% url 'categoria_list' %}">Cancelar</a>
+</div>
+{% endblock %}
