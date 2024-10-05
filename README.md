@@ -190,3 +190,69 @@ Este patrón es ideal para situaciones donde múltiples objetos necesitan reacci
 3. **Reutilización de Código**: La lógica del observador puede ser reutilizada en otras partes del sistema si surgen eventos similares, lo cual facilita la expansión del sistema con un mínimo esfuerzo de desarrollo adicional.
  
 Estos cambios permiten que el sistema reaccione de manera más flexible y desacoplada ante eventos importantes, mejorando su mantenimiento y escalabilidad.
+
+---
+
+## Implementación del patrón de diseño de Normalización de Modelo para la Tercera Forma Normal (NF3)
+
+### ¿Por qué aplicamos la Normalización de Modelo?
+La normalización de modelo se implementó para estructurar la base de datos de manera que se minimice la redundancia de datos y se eliminen las dependencias no deseadas. La Tercera Forma Normal (NF3) es crucial para garantizar que cada campo en una tabla sea dependiente solo de la clave primaria. Al hacerlo, se mejora la integridad de los datos y se facilita la mantenibilidad y escalabilidad del sistema.
+
+Este patrón es ideal para aplicaciones donde los datos están interrelacionados y pueden ser propensos a cambios. Implementar NF3 ayuda a garantizar que las modificaciones en los datos se reflejen adecuadamente sin provocar inconsistencias.
+
+## ¿Cómo se implementó?
+### Identificación de Entidades y Relaciones:
+
+- Se identificaron las entidades clave del modelo de datos, como Usuario, Meta, Movimiento y Categoría.
+- Se definieron las relaciones entre estas entidades, asegurando que cada entidad estuviera relacionada de manera lógica y que las dependencias estuvieran claras.
+
+### Creación de Tablas Normalizadas:
+
+Se crearon las tablas de base de datos siguiendo las reglas de la NF3. Esto implica que:
+- Cada tabla tiene una clave primaria única.
+- No hay dependencias transitivas; los atributos de cada tabla dependen únicamente de la clave primaria.
+- Se eliminaron las columnas que no dependían directamente de la clave primaria.
+
+Uno de los ejemplos de este cambio fue con la clase movimiento que fue actualizada:
+
+#### Versión Antigua
+```python
+    # models.py
+    class Movimiento(models.Model):
+        nombre = models.CharField(max_length=100)
+        usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+        direccion = models.CharField(max_length=10)
+        valor = models.IntegerField()
+        fecha = models.DateField()
+        categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)      
+        def __str__(self):
+            return f'{self.usuario.__str__()} - {self.nombre}'
+```
+
+#### Nueva Versión
+```python
+    # models.py
+    class Movimiento(models.Model):
+        nombre = models.CharField(max_length=100) # Se eliminó el field usuario
+        direccion = models.CharField(max_length=10)
+        valor = models.IntegerField()
+        fecha = models.DateField()
+        categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+
+        def __str__(self):
+            return f'{self.categoria.usuario.__str__()} - {self.nombre}'
+```
+
+### Implementación de Consultas y Operaciones:
+
+- Se implementaron las operaciones CRUD (Crear, Leer, Actualizar y Borrar) de manera que las consultas fueran eficientes y que respetaran la estructura normalizada.
+- Cada operación se diseñó para operar sobre las tablas de forma que se mantuviera la integridad referencial y se respetara la normalización.
+
+### Beneficios de la Normalización a NF3
+
+1. **Reducción de la Redundancia**: Se minimizan los datos duplicados, lo que ahorra espacio y reduce la posibilidad de inconsistencias.
+
+2. **Mejor Integridad de los Datos**: Al eliminar dependencias no deseadas, se asegura que los datos sean más confiables y fáciles de mantener.
+
+3. **Escalabilidad**: La estructura normalizada permite agregar nuevas funcionalidades y relaciones sin afectar la integridad del sistema.
+Implementar la normalización a NF3 en el modelo de datos no solo mejora la estructura de la base de datos, sino que también sienta las bases para un desarrollo futuro más limpio y eficiente.
