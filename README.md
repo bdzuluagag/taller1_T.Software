@@ -217,30 +217,30 @@ Uno de los ejemplos de este cambio fue con la clase movimiento que fue actualiza
 
 #### Versión Antigua
 ```python
-    # models.py
-    class Movimiento(models.Model):
-        nombre = models.CharField(max_length=100)
-        usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-        direccion = models.CharField(max_length=10)
-        valor = models.IntegerField()
-        fecha = models.DateField()
-        categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)      
-        def __str__(self):
-            return f'{self.usuario.__str__()} - {self.nombre}'
+# models.py
+class Movimiento(models.Model):
+   nombre = models.CharField(max_length=100)
+   usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+   direccion = models.CharField(max_length=10)
+   valor = models.IntegerField()
+   fecha = models.DateField()
+   categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)      
+   def __str__(self):
+      return f'{self.usuario.__str__()} - {self.nombre}'
 ```
 
 #### Nueva Versión
 ```python
-    # models.py
-    class Movimiento(models.Model):
-        nombre = models.CharField(max_length=100) # Se eliminó el field usuario
-        direccion = models.CharField(max_length=10)
-        valor = models.IntegerField()
-        fecha = models.DateField()
-        categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+# models.py
+class Movimiento(models.Model):
+   nombre = models.CharField(max_length=100) # Se eliminó el field usuario
+   direccion = models.CharField(max_length=10)
+   valor = models.IntegerField()
+   fecha = models.DateField()
+   categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
 
-        def __str__(self):
-            return f'{self.categoria.usuario.__str__()} - {self.nombre}'
+   def __str__(self):
+      return f'{self.categoria.usuario.__str__()} - {self.nombre}'
 ```
 
 ### Implementación de Consultas y Operaciones:
@@ -256,3 +256,102 @@ Uno de los ejemplos de este cambio fue con la clase movimiento que fue actualiza
 
 3. **Escalabilidad**: La estructura normalizada permite agregar nuevas funcionalidades y relaciones sin afectar la integridad del sistema.
 Implementar la normalización a NF3 en el modelo de datos no solo mejora la estructura de la base de datos, sino que también sienta las bases para un desarrollo futuro más limpio y eficiente.
+
+---
+
+## Implementación del CRUD para la Entidad Categoría
+
+La entidad `Categoria` es fundamental en nuestro modelo de datos, ya que permite clasificar los movimientos realizados por los usuarios. A continuación, se detalla la implementación de las operaciones CRUD (Crear, Leer, Actualizar y Borrar) para la entidad `Categoria`.
+
+### Modelado de la Clase Categoría
+
+La clase `Categoria` se definió de la siguiente manera:
+
+```python
+# models.py
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=50)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.usuario.__str__()} - {self.nombre}'
+```
+
+### Implementación de las Operaciones CRUD
+
+#### 1. Crear una Categoría
+
+Se implementó una vista para permitir a los usuarios crear nuevas categorías. Esta vista utiliza un formulario para recibir el nombre de la categoría y asociarla al usuario correspondiente.
+
+```python
+# views.py
+from django.shortcuts import get_object_or_404
+from .models import Categoria
+from .forms import CategoriaForm
+
+# Vista para crear una nueva categoría
+def categoria_create(request):
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            categoria = form.save(commit=False)
+            categoria.usuario = request.user  # Asocia la categoría al usuario actual
+            categoria.save()
+            return redirect('categoria_list')
+    else:
+        form = CategoriaForm()
+    return render(request, 'registration/categoria_form.html', {'form': form})
+```
+
+#### 2. Leer Categorías
+
+Se implementó una vista para listar todas las categorías disponibles. Esta vista obtiene todas las instancias de `Categoria` y las pasa al contexto del template.
+
+```python
+# views.py
+def categoria_list(request):
+    categorias = Categoria.objects.filter(usuario=request.user)
+    return render(request, 'registration/categoria_list.html', {'categorias': categorias})
+```
+
+#### 3. Actualizar una Categoría
+
+La funcionalidad para editar categorías permite a los usuarios actualizar la información de una categoría existente. Se utiliza un formulario similar al de creación para este propósito.
+
+```python
+# views.py
+def categoria_update(request, pk):
+    categoria = get_object_or_404(Categoria, pk=pk, usuario=request.user)
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST, instance=categoria)
+        if form.is_valid():
+            form.save()
+            return redirect('categoria_list')
+    else:
+        form = CategoriaForm(instance=categoria)
+    return render(request, 'registration/categoria_form.html', {'form': form})
+```
+
+#### 4. Borrar una Categoría
+
+La opción de eliminar una categoría se implementó con una vista de confirmación que permite al usuario confirmar su decisión antes de proceder a la eliminación.
+
+```python
+# views.py
+def categoria_delete(request, pk):
+    categoria = get_object_or_404(Categoria, pk=pk, usuario=request.user)
+    if request.method == 'POST':
+        categoria.delete()
+        return redirect('categoria_list')
+    return render(request, 'registration/categoria_confirm_delete.html', {'categoria': categoria})
+```
+
+### Beneficios de la Implementación del CRUD para Categoría
+
+1. **Organización Efectiva**: Permite a los usuarios organizar sus movimientos de manera eficiente, facilitando la búsqueda y el análisis de datos.
+
+2. **Integración con el Usuario**: Cada categoría está asociada a un usuario, lo que mejora la personalización y el control de la información.
+
+3. **Facilidad de Uso**: La interfaz implementada para las operaciones CRUD es intuitiva y fácil de usar, mejorando la experiencia del usuario.
+
+La implementación del CRUD para la entidad `Categoria` no solo complementa la funcionalidad del sistema, sino que también refuerza la estructura normalizada de la base de datos, asegurando que las relaciones entre las entidades sean claras y eficientes.
