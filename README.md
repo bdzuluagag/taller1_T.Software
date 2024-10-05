@@ -70,3 +70,99 @@ Para resolver este problema, extraímos la lógica relacionada con los movimient
 - **Testabilidad**: La vista ahora depende de una abstracción, por lo que es fácil simular el comportamiento del servicio en pruebas unitarias.
 
 Con este cambio, se ha implementado una inversión de dependencias en la vista de movimientos, haciendo que el código sea más modular, mantenible y fácil de probar.
+
+---
+
+## Implementación del patrón de diseño Observer de Python en la funcionalidad de creación de metas
+
+### ¿Por qué aplicamos el Patrón Observer?
+El **patrón Observer** se implementó en la funcionalidad de creación de metas para agregar una mejora en la notificación de eventos. Este patrón es adecuado porque la creación de una meta puede ser relevante para varios componentes del sistema, y el patrón Observer permite notificar automáticamente a otros módulos cuando se produce este evento, sin acoplar directamente las dependencias.
+
+Este patrón es ideal para situaciones donde múltiples objetos necesitan reaccionar a un cambio en el estado de otro objeto, que es justamente el caso de la funcionalidad de metas. Implementar Observer permite mantener un diseño desacoplado, mejorando la escalabilidad del sistema.
+
+### ¿Cómo se implementó?
+1. **Creación de `observers.py`**: Se creó el archivo `observers.py` en la carpeta `wallet`. En este archivo, se implementó el patrón Observer, que consiste en:
+   - La clase `GoalSubject` para gestionar la suscripción y notificación de los observadores.
+   - La clase `GoalCreatedObserver` como observador para recibir notificaciones sobre la creación o modificación de una meta.
+  
+     ```python
+     # observers.py
+     from abc import ABC, abstractmethod
+
+# Subject interface
+class Subject(ABC):
+    def __init__(self):
+        self._observers = []
+
+    def add_observer(self, observer):
+        self._observers.append(observer)
+
+    def remove_observer(self, observer):
+        self._observers.remove(observer)
+
+    def notify_observers(self, event):
+        for observer in self._observers:
+            observer.update(event)
+
+# Observer interface
+class Observer(ABC):
+    @abstractmethod
+    def update(self, event):
+        pass
+
+# Concrete observer for goals
+class GoalCreatedObserver(Observer):
+    def update(self, event):
+        print(f"Notificación: Se ha creado/modificado una meta: {event}")
+        # Aquí se podrá implementar más lógica en un futuro, como enviar un correo electrónico o registrar el evento.
+     ```
+
+2. **Actualización de la Vista de Metas (`views.py`)**:
+   - En la función `goals()`, se añadió lógica para instanciar el sujeto (`GoalSubject`) y registrar un observador (`GoalCreatedObserver`).
+   - Cada vez que se crea una meta, se notifica al observador registrado.
+
+   ```python
+   # views.py
+   def goals(request):
+    connection.current_user = request.user
+
+    # Creación del sujeto
+    goal_subject = Subject()
+    # Añadir el observador
+    goal_observer = GoalCreatedObserver()
+    goal_subject.add_observer(goal_observer)
+
+    goal_name = request.GET.get('goal_name')
+    goal_value = request.GET.get('goal_value')
+    goal_date = request.GET.get('goal_date')
+
+    if goal_date and goal_name and goal_value:
+        connection.create_goal(goal_name.lower(), goal_value, goal_date, request.user)
+        connection.create_category(goal_name, request.user)
+
+        # Notificar a los observadores sobre la nueva meta
+        goal_subject.notify_observers(f"Meta '{goal_name}' creada con valor {goal_value} y fecha {goal_date}")
+
+    user_goals = connection.search_user_goals(request.user)
+    user_estimated_dates = mov.date_estimated(user_goals)
+
+    return render(request, 'registration/goals.html',
+                  {'goal_name': goal_name, 'goal_value': goal_value, 'goal_date': goal_date, 'user_goals': user_goals, 'estimated_dates': user_estimated_dates})
+   ```
+3. **Mensajes de Consola**: Para comprobar la correcta notificación, se añadió un `print()` en `GoalCreatedObserver` que imprime un mensaje cuando se crea o modifica una meta.
+
+   ```python
+   # observers.py
+   class GoalCreatedObserver(Observer):
+    def update(self, event):
+        print(f"Notificación: Se ha creado/modificado una meta: {event}")
+   ```
+
+### Beneficios de esta implementación:
+1. **Desacoplamiento**: La vista de metas no necesita saber qué hacer con las acciones posteriores a la creación de una meta. El patrón Observer maneja estas acciones automáticamente, facilitando el mantenimiento y la modificación de la funcionalidad.
+
+2. **Escalabilidad**: Si en el futuro se requieren más acciones al crear o modificar una meta (por ejemplo, enviar un correo electrónico o registrar un log), se puede simplemente agregar más observadores al sujeto, sin modificar el código de la vista.
+
+3. **Reutilización de Código**: La lógica del observador puede ser reutilizada en otras partes del sistema si surgen eventos similares, lo cual facilita la expansión del sistema con un mínimo esfuerzo de desarrollo adicional.
+ 
+Estos cambios permiten que el sistema reaccione de manera más flexible y desacoplada ante eventos importantes, mejorando su mantenimiento y escalabilidad.
