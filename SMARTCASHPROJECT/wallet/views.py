@@ -10,6 +10,8 @@ from django.http import HttpResponse
 import datetime
 from wallet import dummy
 
+from .services import MovementService 
+
 
 def home(request):
     connection.current_user = request.user
@@ -52,6 +54,10 @@ def data_form(request):
 
 def movements(request):
     connection.current_user = request.user
+
+    # Inicializa el servicio de movimientos
+    movement_service = MovementService(request.user)
+
     average_income = request.GET.get('average_income')
     life_cost_average = request.GET.get('life_cost_average')
     month_income = request.GET.get('month_income')
@@ -68,22 +74,16 @@ def movements(request):
     exit_category = request.GET.get('exit_category')
 
     incomes = f'{income_name}, {income_value}, {income_category}' if income_value and income_category and income_name else None
-
     exits = f'{exit_name}, {exit_value}, {exit_category}' if exit_category and exit_name and exit_value else None
 
-    user_movements = mov.read_movements(incomes, exits, request.user)
+    # Usa el servicio para obtener los movimientos del usuario
+    user_movements = movement_service.get_user_movements(incomes, exits)
 
     download_movements = request.GET.get('download_movements')
     if download_movements == '':
-        mov.generate_movements_csv(user_movements, request.user)
-        file_path = os.path.join(settings.MEDIA_ROOT, f'static/user_movements/{request.user.username}_movements.csv')
-        if os.path.exists(file_path):
-            with open(file_path, 'rb') as file:
-                response = HttpResponse(file.read(), content_type='application/octet-stream')
-                response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(file_path)
-                return response
-        else:
-            return HttpResponse('El archivo no existe.')
+        # Usa el servicio para generar el CSV y devolver la respuesta
+        return movement_service.generate_movements_csv(user_movements)
+
     user_categories = [category.nombre for category in connection.search_user_categories(request.user)]
 
     return render(request, 'registration/movements.html', {'average_income': average_income,
@@ -92,7 +92,8 @@ def movements(request):
                                                            'month_life_expenses': month_life_expenses,
                                                            'month_expenses': month_expenses,
                                                            'current_savings': current_savings,
-                                                           'movements': user_movements, 'user_categories': user_categories})
+                                                           'movements': user_movements, 
+                                                           'user_categories': user_categories})
 
 
 def categories(request):
