@@ -14,6 +14,30 @@ Dentro de la carpeta SMARTCASHPROJECT/:
 
 ---
 
+## Revisión Autocrítica de parámetro de calidad
+
+### Usabilidad
+- **Aspectos positivos**: La interfaz parece clara y fácil de navegar. El uso de vistas como `home`, `register` y `movements` hace que la estructura del sitio sea comprensible.
+- **Aspectos a mejorar**: Sería beneficioso simplificar el proceso de interacción para el usuario, reduciendo la cantidad de campos obligatorios o pasos innecesarios.
+
+### Compatibilidad
+- **Aspectos positivos**: Utiliza el framework Django, lo cual garantiza compatibilidad con distintas bases de datos y sistemas operativos.
+- **Aspectos a mejorar**: Se podría mejorar la compatibilidad incluyendo pruebas en más navegadores y dispositivos para asegurar la misma experiencia de usuario.
+
+### Mantenibilidad
+- **Aspectos positivos**: El código está segmentado en diferentes vistas, modelos y servicios, lo que facilita la lectura.
+- **Aspectos a mejorar**: Se podrían implementar patrones de diseño para separar más claramente la lógica de negocio de la lógica de presentación, lo cual haría el proyecto más fácil de mantener.
+
+### Rendimiento
+- **Aspectos positivos**: Las consultas a la base de datos están segmentadas, lo que facilita la optimización.
+- **Aspectos a mejorar**: Algunas consultas como `search_user_categories` se realizan varias veces sin optimización. Implementar caché o mejorar la eficiencia de estas consultas ayudaría al rendimiento.
+
+### Seguridad
+- **Aspectos positivos**: Utiliza el sistema de autenticación de Django, lo cual garantiza seguridad básica en el manejo de usuarios.
+- **Aspectos a mejorar**: Las funcionalidades deberían ser evaluadas con un enfoque más fuerte en la validación de entradas y la protección contra ataques como CSRF.
+
+---
+
 ## Inversión de Dependencias en la Vista de Movimientos
 
 ### ¿Por qué aplicamos la inversión de dependencias?
