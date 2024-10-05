@@ -114,9 +114,6 @@ def statistics(request):
     connection.current_user = request.user
     entrada_movements = connection.search_user_movement_direction('entrada', request.user)
     salida_movements = connection.search_user_movement_direction('salida', request.user)
-    
-    print(f"Movimientos de entrada: {len(entrada_movements)}")  # Agrega esta línea
-    print(f"Movimientos de salida: {len(salida_movements)}")  # Agrega esta línea
 
     charts.pie_chart_movements_direction(entrada_movements, 'entrada')
     charts.pie_chart_movements_direction(salida_movements, 'salida')
