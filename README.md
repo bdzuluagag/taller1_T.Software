@@ -89,33 +89,33 @@ Este patrón es ideal para situaciones donde múltiples objetos necesitan reacci
      # observers.py
      from abc import ABC, abstractmethod
 
-# Subject interface
-class Subject(ABC):
-    def __init__(self):
-        self._observers = []
-
-    def add_observer(self, observer):
-        self._observers.append(observer)
-
-    def remove_observer(self, observer):
-        self._observers.remove(observer)
-
-    def notify_observers(self, event):
-        for observer in self._observers:
-            observer.update(event)
-
-# Observer interface
-class Observer(ABC):
-    @abstractmethod
-    def update(self, event):
-        pass
-
-# Concrete observer for goals
-class GoalCreatedObserver(Observer):
-    def update(self, event):
-        print(f"Notificación: Se ha creado/modificado una meta: {event}")
-        # Aquí se podrá implementar más lógica en un futuro, como enviar un correo electrónico o registrar el evento.
-     ```
+      # Subject interface
+      class Subject(ABC):
+          def __init__(self):
+              self._observers = []
+      
+          def add_observer(self, observer):
+              self._observers.append(observer)
+      
+          def remove_observer(self, observer):
+              self._observers.remove(observer)
+      
+          def notify_observers(self, event):
+              for observer in self._observers:
+                  observer.update(event)
+      
+      # Observer interface
+      class Observer(ABC):
+          @abstractmethod
+          def update(self, event):
+              pass
+      
+      # Concrete observer for goals
+      class GoalCreatedObserver(Observer):
+          def update(self, event):
+              print(f"Notificación: Se ha creado/modificado una meta: {event}")
+              # Aquí se podrá implementar más lógica en un futuro, como enviar un correo electrónico o registrar el evento.
+      ```
 
 2. **Actualización de la Vista de Metas (`views.py`)**:
    - En la función `goals()`, se añadió lógica para instanciar el sujeto (`GoalSubject`) y registrar un observador (`GoalCreatedObserver`).
