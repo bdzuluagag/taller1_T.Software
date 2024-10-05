@@ -217,18 +217,6 @@ Uno de los ejemplos de este cambio fue con la clase movimiento que fue actualiza
 
 #### Versión Antigua
 ```python
-<<<<<<< HEAD
-    # models.py
-    class Movimiento(models.Model):
-        nombre = models.CharField(max_length=100)
-        usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-        direccion = models.CharField(max_length=10)
-        valor = models.IntegerField()
-        fecha = models.DateField()
-        categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)      
-        def __str__(self):
-            return f'{self.usuario.__str__()} - {self.nombre}'
-=======
 # models.py
 class Movimiento(models.Model):
    nombre = models.CharField(max_length=100)
@@ -239,23 +227,10 @@ class Movimiento(models.Model):
    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)      
    def __str__(self):
       return f'{self.usuario.__str__()} - {self.nombre}'
->>>>>>> 069e25374986a592c50ee1023c8b9f976081eee6
 ```
 
 #### Nueva Versión
 ```python
-<<<<<<< HEAD
-    # models.py
-    class Movimiento(models.Model):
-        nombre = models.CharField(max_length=100) # Se eliminó el field usuario
-        direccion = models.CharField(max_length=10)
-        valor = models.IntegerField()
-        fecha = models.DateField()
-        categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-
-        def __str__(self):
-            return f'{self.categoria.usuario.__str__()} - {self.nombre}'
-=======
 # models.py
 class Movimiento(models.Model):
    nombre = models.CharField(max_length=100) # Se eliminó el field usuario
@@ -266,7 +241,6 @@ class Movimiento(models.Model):
 
    def __str__(self):
       return f'{self.categoria.usuario.__str__()} - {self.nombre}'
->>>>>>> 069e25374986a592c50ee1023c8b9f976081eee6
 ```
 
 ### Implementación de Consultas y Operaciones:
@@ -281,9 +255,6 @@ class Movimiento(models.Model):
 2. **Mejor Integridad de los Datos**: Al eliminar dependencias no deseadas, se asegura que los datos sean más confiables y fáciles de mantener.
 
 3. **Escalabilidad**: La estructura normalizada permite agregar nuevas funcionalidades y relaciones sin afectar la integridad del sistema.
-<<<<<<< HEAD
-Implementar la normalización a NF3 en el modelo de datos no solo mejora la estructura de la base de datos, sino que también sienta las bases para un desarrollo futuro más limpio y eficiente.
-=======
 Implementar la normalización a NF3 en el modelo de datos no solo mejora la estructura de la base de datos, sino que también sienta las bases para un desarrollo futuro más limpio y eficiente.
 
 ---
@@ -384,4 +355,3 @@ def categoria_delete(request, pk):
 3. **Facilidad de Uso**: La interfaz implementada para las operaciones CRUD es intuitiva y fácil de usar, mejorando la experiencia del usuario.
 
 La implementación del CRUD para la entidad `Categoria` no solo complementa la funcionalidad del sistema, sino que también refuerza la estructura normalizada de la base de datos, asegurando que las relaciones entre las entidades sean claras y eficientes.
->>>>>>> 069e25374986a592c50ee1023c8b9f976081eee6
