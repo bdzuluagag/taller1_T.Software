@@ -9,8 +9,8 @@ from django.conf import settings
 from django.http import HttpResponse
 import datetime
 from wallet import dummy
-
 from .services import MovementService 
+from .observers import Subject, GoalCreatedObserver
 
 
 def home(request):
@@ -130,17 +130,29 @@ def suggestions(request):
 
 def goals(request):
     connection.current_user = request.user
+
+    # Creación del sujeto
+    goal_subject = Subject()
+    # Añadir el observador
+    goal_observer = GoalCreatedObserver()
+    goal_subject.add_observer(goal_observer)
+
     goal_name = request.GET.get('goal_name')
     goal_value = request.GET.get('goal_value')
     goal_date = request.GET.get('goal_date')
+
     if goal_date and goal_name and goal_value:
         connection.create_goal(goal_name.lower(), goal_value, goal_date, request.user)
         connection.create_category(goal_name, request.user)
+
+        # Notificar a los observadores sobre la nueva meta
+        goal_subject.notify_observers(f"Meta '{goal_name}' creada con valor {goal_value} y fecha {goal_date}")
+
     user_goals = connection.search_user_goals(request.user)
     user_estimated_dates = mov.date_estimated(user_goals)
+
     return render(request, 'registration/goals.html',
                   {'goal_name': goal_name, 'goal_value': goal_value, 'goal_date': goal_date, 'user_goals': user_goals, 'estimated_dates': user_estimated_dates})
-
 
 def events(request):
     connection.current_user = request.user

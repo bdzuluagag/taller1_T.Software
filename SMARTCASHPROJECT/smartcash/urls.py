@@ -23,6 +23,7 @@ urlpatterns = [
     path('', wallet_views.home, name='home'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', wallet_views.register, name="register"),
+    path('logout', wallet_views.login, name="logout"),
     path('movements/', wallet_views.movements, name='movements'),
     path('data_form/', wallet_views.data_form, name='dataaform'),
     path('categories/', wallet_views.categories, name='categories'),
